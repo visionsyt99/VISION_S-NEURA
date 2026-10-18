@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDE8D3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#190019" media="(prefers-color-scheme: dark)">
+<title>VISION_S // NEURA — Knowledge Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FDE8D3;--card:#DAEBE3;--ink:#2B332C;--mut:#566057;--line:#CFD6C4;--acc:#657166;--accx:#FFFBF6;--grid:rgba(101,113,102,.09);--sh:0 1px 2px rgba(101,113,102,.14),0 12px 28px -14px rgba(101,113,102,.5);--r:20px;--s1:#99CDD8;--s2:#F3C382;--s3:#CFD6C4;--s4:#657166;--t1:#2B332C;--t2:#2B332C;--t3:#2B332C;--t4:#FFFBF6;--cta-bg:#657166;--cta-tx:#FDE8D3;--cta-b:#F3C382;--cta-bt:#2B332C}
+:root[data-t=dark]{--bg:#190019;--card:#2B124C;--ink:#FBE4D8;--mut:#DFB6B2;--line:#522B5B;--acc:#DFB6B2;--accx:#190019;--grid:rgba(223,182,178,.07);--sh:0 12px 30px -16px #000;--s1:#854F6C;--s2:#DFB6B2;--s3:#522B5B;--s4:#FBE4D8;--t1:#FBE4D8;--t2:#190019;--t3:#FBE4D8;--t4:#190019;--cta-bg:#522B5B;--cta-tx:#FBE4D8;--cta-b:#DFB6B2;--cta-bt:#190019}
+[hidden]{display:none!important}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:400 16px/1.55 'DM Sans',system-ui,sans-serif;color:var(--ink);background:linear-gradient(var(--grid) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/32px 32px,var(--bg);padding-bottom:calc(104px + env(safe-area-inset-bottom));min-height:100dvh}
+h1,h2,h3,.brand,.stats b{font-family:'Bricolage Grotesque','DM Sans',sans-serif;letter-spacing:-.02em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 16px 10px}
+.bar{max-width:1160px;margin:auto;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:1.2rem;cursor:pointer;user-select:none;white-space:nowrap}
+.brand b{color:var(--acc)}
+.sw{grid-column:1/-1;order:3}
+.search{width:100%;padding:11px 16px 11px 42px;border-radius:14px;border:1px solid var(--line);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%238791b5' stroke-width='2'%3E%3Ccircle cx='8' cy='8' r='6'/%3E%3Cpath d='m13 13 4 4'/%3E%3C/svg%3E") 14px center no-repeat}
+.ib{width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--line);flex:none;display:grid;place-items:center}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + env(safe-area-inset-bottom));width:min(420px,calc(100vw - 24px));display:flex;gap:4px;padding:6px;border-radius:22px;background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:var(--sh);z-index:30}
+nav button{flex:1;display:grid;justify-items:center;padding:7px 4px;border-radius:16px;font-size:.72rem;font-weight:600;color:var(--mut)}
+nav button span{font-size:1.15rem;line-height:1.2}
+nav button.on{background:var(--acc);color:var(--accx)}
+main{max-width:1160px;margin:auto;padding:18px 16px}
+.hero{position:relative;overflow:hidden;display:grid;gap:22px;padding:28px 22px;border-radius:28px;background:linear-gradient(135deg,color-mix(in srgb,var(--s1) 60%,var(--card)),var(--card));border:1px solid var(--line);box-shadow:var(--sh);margin-bottom:22px}
+.net{position:absolute;right:-30px;top:-10px;width:min(520px,95%);opacity:.4;pointer-events:none}
+.net path{fill:none;stroke:var(--acc);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.6s .2s ease forwards}
+.net circle{fill:var(--acc);opacity:0;animation:fi .5s 1.1s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}@keyframes fi{to{opacity:1}}
+.ht{position:relative;max-width:560px}
+.pill{display:inline-block;padding:5px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:.8rem;font-weight:600;color:var(--mut)}
+.hero h1{font-size:clamp(2.1rem,7.4vw,3.8rem);line-height:1.02;font-weight:800;margin:14px 0 12px}
+.lead{color:var(--mut);max-width:46ch}
+.hb{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.hb .btn{margin:0}
+.stats{position:relative;display:flex;gap:10px}
+.stats div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.stats b{display:block;font-weight:800;font-size:1.7rem;line-height:1.1}
+.stats span{font-size:.8rem;color:var(--mut)}
+.tiles{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 10px;padding:2px 16px 10px;scrollbar-width:none}
+.tile{flex:none;scroll-snap-align:start;min-width:136px;display:grid;gap:1px;text-align:left;padding:14px;border-radius:18px;background:var(--card);border:1.5px solid var(--line)}
+.tile i{font-style:normal;font-size:1.5rem}.tile b{font-weight:700}.tile small{color:var(--mut)}
+.tile.on{background:var(--c);border-color:var(--c);color:var(--ct)}.tile.on small{color:inherit;opacity:.8}
+.sh{display:flex;justify-content:space-between;align-items:baseline;margin:10px 2px 14px}
+.sh h2{font-size:1.5rem;font-weight:800}.sh span{color:var(--mut);font-size:.85rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c);z-index:1}
+.thumb{position:relative;aspect-ratio:16/10;background:color-mix(in srgb,var(--c) 40%,var(--card)) center/cover;display:grid;place-items:center;font-size:2.8rem;cursor:pointer}
+.tag{position:absolute;left:14px;bottom:10px;padding:4px 11px;border-radius:99px;background:var(--c);color:var(--ct);font-size:.74rem;font-weight:700}
+.pc{position:absolute;right:10px;bottom:10px;padding:4px 9px;border-radius:99px;background:#000a;color:#fff;font-size:.72rem}
+.cb{padding:14px 16px 16px 20px;cursor:pointer;display:grid;gap:4px}
+.cb h3{font-size:1.1rem;line-height:1.25}.ch{font-size:.82rem;font-weight:700;color:var(--ink)}
+.cb p{font-size:.86rem;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mut);margin-top:6px}
+.bm{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--card) 90%,transparent);border:1px solid var(--line);font-size:1.15rem;z-index:2;color:var(--ink)}
+@media(hover:hover){.card{transition:transform .2s}.card:hover{transform:translateY(-3px)}}
+.sk{height:300px;border-radius:var(--r);background:linear-gradient(100deg,var(--card) 30%,var(--line) 50%,var(--card) 70%) 0 0/250% 100%;animation:sk 1.2s infinite linear}@keyframes sk{to{background-position:-250% 0}}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:48px 12px}.empty b{display:block;font-size:2rem}
+.cta{margin-top:30px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:22px;border-radius:24px;background:var(--cta-bg);color:var(--cta-tx)}
+.cta p{opacity:.75;font-size:.9rem}.cta div:last-child{display:flex;gap:8px;flex-wrap:wrap}.cta .btn{margin:0;background:var(--cta-b);color:var(--cta-bt);border:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 22px;border-radius:14px;background:var(--acc);color:var(--accx);font-weight:700;margin-top:16px;border:0;text-decoration:none;cursor:pointer}
+.btn.g{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5}
+dialog{border:0;border-radius:24px;width:min(560px,94vw);max-height:90dvh;padding:0;background:var(--bg);color:var(--ink);overflow:auto;box-shadow:0 30px 80px -20px #000a}
+dialog.wide{width:min(940px,96vw)}
+dialog::backdrop{background:#190019b3;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+dialog[open]{animation:up .25s ease}@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:2}
+.dh h3{font-size:1.1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.db{padding:18px}
+label{display:block;font-size:.85rem;font-weight:700;margin:14px 0 5px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+input:focus,select:focus,textarea:focus{border-color:var(--acc);outline:0;box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 25%,transparent)}
+textarea{min-height:90px;resize:vertical}
+#dView[open]{display:flex;flex-direction:column;height:min(92dvh,860px);overflow:hidden}
+.stage{flex:1;min-height:0;margin:12px 18px 6px;border:1.5px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--card) 60%,var(--bg));display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;touch-action:pan-y;padding:10px}
+.stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.stage iframe{width:100%;height:100%;border:0;border-radius:10px}
+.stage:fullscreen{margin:0;border-radius:0;border:0;padding:0;background:#000}
+.stage:fullscreen img{border-radius:0;box-shadow:none}
+.ctl{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 16px}
+.ctl .btn{padding:10px 16px}
+#vD{padding:0 18px 16px;font-size:.9rem;max-height:84px;overflow:auto}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
+.row div{min-width:0}.row b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tabs{display:flex;gap:8px;margin-bottom:8px;overflow-x:auto}.tabs .btn{margin:0;flex:none}
+.code{width:100%;height:220px;font:12px/1.4 ui-monospace,Menlo,monospace;white-space:pre}
+#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:14px;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:90vw;font-size:.9rem}
+#toast.s{opacity:1;transform:translate(-50%,0)}
+@media(max-width:759px){dialog{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:24px 24px 0 0;max-height:94dvh}#dView[open]{height:100dvh;max-height:none;border-radius:0}}
+@media(min-width:860px){
+ body{padding-bottom:0}
+ .bar{grid-template-columns:auto 1fr 300px auto}.sw{grid-column:auto;order:0}
+ nav{position:static;transform:none;width:auto;justify-self:center;box-shadow:none;background:none;border:0;padding:0}
+ nav button{display:flex;gap:6px;padding:8px 16px;font-size:.9rem}
+ .hero{grid-template-columns:1.3fr 1fr;align-items:end;padding:46px}.stats{flex-direction:row}
+ .tiles{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible;margin:0 0 12px;padding:0}.tile{min-width:0}
+ #toast{bottom:28px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.net path{stroke-dashoffset:0}.net circle{opacity:1}}
+
+/* ---- polish: icons, motion, mobile ---- */
+:root{--e:cubic-bezier(.22,1,.36,1);--sp:cubic-bezier(.34,1.56,.64,1)}
+html{-webkit-text-size-adjust:100%}button,a,.tile{-webkit-tap-highlight-color:transparent}
+.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+body:has(dialog[open]){overflow:hidden}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}::view-transition-new(root){z-index:2}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+header{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;transition:border-color .3s}header::before{content:'';position:absolute;inset:0;z-index:-1;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}header.sc{border-bottom-color:color-mix(in srgb,var(--acc) 35%,var(--line))}
+.brand svg{transition:transform .6s var(--sp)}.brand:hover svg{transform:rotate(-12deg) scale(1.08)}
+.sin{position:relative}.sin .i{position:absolute;left:14px;top:50%;translate:0 -50%;width:18px;height:18px;color:var(--mut);pointer-events:none}
+.search{background:var(--card);transition:border-color .3s,box-shadow .3s}
+.ib{display:grid;place-items:center;transition:transform .3s var(--e),background .3s}.ib:active{transform:scale(.9)}
+#theme>svg{grid-area:1/1;transition:transform .7s var(--e),opacity .4s}
+#theme .moon{opacity:0;transform:rotate(-90deg) scale(.3)}
+:root[data-t=dark] #theme .sun{opacity:0;transform:rotate(90deg) scale(.3)}:root[data-t=dark] #theme .moon{opacity:1;transform:none}
+nav{isolation:isolate}
+nav .ind{position:absolute;top:6px;bottom:6px;left:0;width:var(--w,0);transform:translateX(var(--x,0));border-radius:16px;background:var(--acc);transition:transform .55s var(--sp),width .55s var(--sp);z-index:-1}
+nav:not(.rdy) .ind{transition:none}
+nav button{position:relative;justify-items:center;transition:color .3s,transform .25s var(--e)}nav button:active{transform:scale(.94)}
+nav button.on{background:none;color:var(--accx)}
+nav button .i{width:23px;height:23px;margin-bottom:2px;transition:transform .55s var(--sp)}nav button.on .i{transform:translateY(-1px) scale(1.12)}
+.btn{transition:transform .25s var(--e),background .3s,box-shadow .3s}.btn:active{transform:scale(.96)}.btn .i{width:18px;height:18px}
+@media(hover:hover){.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px var(--acc)}.btn:disabled:hover{transform:none;box-shadow:none}}
+.hero .ht>*{animation:rise .9s var(--e) backwards}.hero .pill{animation-delay:.05s}.hero h1{animation-delay:.15s}.hero .lead{animation-delay:.25s}.hero .hb{animation-delay:.35s}
+.stats div{animation:rise .8s var(--e) backwards}.stats div:nth-child(2){animation-delay:.1s}.stats div:nth-child(3){animation-delay:.2s}
+.net{animation:drift 12s ease-in-out infinite alternate}@keyframes drift{to{transform:translate(-14px,10px) rotate(-2deg)}}
+.net circle{transform-box:fill-box;transform-origin:center;animation:fi .5s 1.1s forwards,pl 3.2s 1.8s ease-in-out infinite}.net circle:nth-of-type(even){animation-delay:1.1s,3.4s}
+@keyframes pl{50%{transform:scale(1.8)}}
+.tile{position:relative;transition:transform .3s var(--e),background .35s,border-color .35s,color .35s}
+.tile .i{width:26px;height:26px;margin-bottom:6px;transition:transform .55s var(--sp)}.tile.on .i{transform:scale(1.15) rotate(-8deg)}
+.card{animation:rise .6s var(--e) backwards;animation-delay:calc(var(--i,0)*55ms)}.still .card{animation:none}
+.card.out{animation:cout .28s ease forwards}@keyframes cout{to{opacity:0;transform:scale(.94)}}
+.thumb{overflow:hidden}.thumb .doc{width:42%;max-width:92px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));transition:transform .5s var(--sp)}
+@media(hover:hover){.card:hover .doc{transform:rotate(-5deg) scale(1.07)}}
+.tag{display:flex;align-items:center;gap:5px}.tag .i{width:14px;height:14px}.tag em{font-style:normal}
+.op{display:inline-flex;align-items:center;gap:2px}.op .i{width:15px;height:15px;transition:transform .3s var(--e)}@media(hover:hover){.card:hover .op .i{transform:translateX(4px)}}
+.bm{display:grid;place-items:center;transition:background .3s,color .3s,transform .25s var(--e)}.bm:active{transform:scale(.88)}
+.bm .i{width:19px;height:19px}.bm.on{background:var(--c);color:var(--ct);border-color:var(--c)}.bm.on .i{fill:currentColor}.bm.pop .i{animation:pop .5s var(--sp)}
+@keyframes pop{0%{transform:scale(.6)}55%{transform:scale(1.35) rotate(-10deg)}}
+.empty .i.big{display:block;width:56px;height:56px;margin:0 auto 12px;color:var(--acc);stroke-width:1.3;animation:bob 3s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-6px)}}
+dialog[open]{animation:up .45s var(--e)}@keyframes up{from{opacity:0;transform:translateY(24px) scale(.97)}}
+dialog.out{animation:dn .22s ease forwards}@keyframes dn{to{opacity:0;transform:translateY(24px) scale(.98)}}
+dialog[open]::backdrop{animation:bf .3s}dialog.out::backdrop{animation:bo .22s forwards}@keyframes bf{from{opacity:0}}@keyframes bo{to{opacity:0}}
+.dh .ib{width:40px;height:40px}
+.stage>*{animation:sl .45s var(--e)}@keyframes sl{from{opacity:0;transform:translateX(var(--dx,0)) scale(.98)}}
+.ctl{padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+#toast{transition:opacity .25s,transform .5s var(--sp)}
+input,select{min-height:46px}
+@media(min-width:860px){nav{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;transform:none}nav .ind{top:0;bottom:0}nav button{flex-direction:row;align-items:center;white-space:nowrap}.bar{grid-template-columns:auto 1fr minmax(150px,300px) auto}nav button .i{width:19px;height:19px;margin:0}}
+@media(max-width:859px){
+ header{padding:calc(8px + env(safe-area-inset-top)) 14px 8px}.bar{gap:8px 10px}.brand{font-size:1.08rem}
+ .sw{display:grid;grid-template-rows:1fr;transition:grid-template-rows .35s var(--e),opacity .25s}.sin{min-height:0;overflow:hidden;padding:3px;margin:-3px}
+ header.min .sw{grid-template-rows:0fr;opacity:0;pointer-events:none}header.min .bar{row-gap:0}
+ .tiles{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+ .cta .btn{flex:1}.cta div:last-child{width:100%}
+}
+@media(max-width:759px){
+ dialog[open]{animation:sheet .5s var(--e)}dialog.out{animation:sheetout .26s ease forwards}
+ @keyframes sheet{from{transform:translateY(100%)}}@keyframes sheetout{to{transform:translateY(100%)}}
+ dialog{transition:transform .3s var(--e)}.dh{padding-top:22px}
+ .dh::before{content:'';position:absolute;top:8px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:9px;background:var(--line)}
+}
+@media(max-width:599px){
+ main{padding:14px 14px}
+ .hero{padding:24px 18px 18px;border-radius:24px;gap:18px;margin-bottom:16px}.net{width:100%;right:-18%;top:-6%;opacity:.26}
+ .hero h1{font-size:clamp(2rem,9.5vw,2.6rem)}.hb .btn{flex:1 1 calc(50% - 5px);padding:13px 10px}
+ .stats div{padding:10px 12px}.stats b{font-size:1.45rem}.stats span{font-size:.74rem}
+ .tile{min-width:122px;padding:12px}.sh h2{font-size:1.3rem}
+ .grid{grid-template-columns:1fr;gap:12px}.card{flex-direction:row;min-height:128px}
+ .thumb{width:108px;aspect-ratio:auto;flex:none}.tag{left:8px;bottom:8px;padding:5px;border-radius:50%}.tag em{display:none}.tag .i{width:15px;height:15px}
+ .pc{right:6px;bottom:8px;padding:3px 7px;font-size:.66rem}
+ .cb{flex:1;min-width:0;padding:12px 54px 12px 14px;align-content:center}.cb h3{font-size:1.02rem}.bm{top:6px;right:6px;width:42px;height:42px}.sk{height:128px}
+ .ctl{display:grid;grid-template-columns:44px 1fr 44px 44px auto;gap:8px}.ctl .lbl{display:none}
+ .ctl #prev,.ctl #next,#fsBtn{padding:0;height:44px;width:44px;border-radius:50%}#cnt{text-align:center;font-size:.9rem}
+ .row{flex-wrap:wrap}.row>span{display:flex;gap:6px;width:100%}.row>span .btn{flex:1}
+ .cta{padding:18px}
+.stage{margin:10px 12px 4px;border-radius:14px}
+}
+@media(min-width:860px) and (max-width:1080px){nav button{padding:8px 10px;font-size:.85rem}nav button .i{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.net circle{opacity:1}}
+.aiBar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px 0;align-items:center}.aiBar select{width:auto;flex:1 1 140px;min-height:42px;padding:8px 12px}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px}.seg button{padding:7px 14px;border-radius:9px;font-weight:700;font-size:.85rem;color:var(--mut);transition:background .3s,color .3s}.seg button.on{background:var(--acc);color:var(--accx)}
+.aiModes{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}.aiModes button{flex:none;padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-weight:600;font-size:.85rem;transition:background .3s,color .3s,transform .2s}.aiModes button:active{transform:scale(.95)}.aiModes button.on{background:var(--s2);color:var(--t2);border-color:var(--s2)}
+#dAI[open]{display:flex;flex-direction:column;height:min(92dvh,860px);overflow:hidden}
+.aiLog{flex:1;min-height:0;overflow-y:auto;padding:6px 16px 12px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}.aiLog>:last-child{animation:rise .45s var(--e) backwards}
+.mu{align-self:flex-end;max-width:85%;background:var(--acc);color:var(--accx);padding:10px 14px;border-radius:18px 18px 4px 18px;white-space:pre-wrap;overflow-wrap:anywhere}
+.mm{align-self:flex-start;max-width:94%;position:relative}.mb{background:var(--card);border:1px solid var(--line);padding:12px 40px 12px 14px;border-radius:18px 18px 18px 4px;font-size:.94rem;overflow-wrap:anywhere}
+.mb p{margin:0 0 .55em}.mb p:last-child{margin:0}.mb ul,.mb ol{padding-left:20px;margin:.3em 0}.mb code{background:var(--bg);padding:1px 5px;border-radius:6px}
+.tw{overflow-x:auto;margin:.4em 0}.tw table{border-collapse:collapse;font-size:.85rem}.tw td,.tw th{border:1px solid var(--line);padding:5px 9px;text-align:left}.tw th{background:var(--bg)}
+.cpb{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:8px;color:var(--mut);display:grid;place-items:center}.cpb .i{width:16px;height:16px}
+.dots{display:flex;gap:5px;padding:16px!important}.dots i{width:8px;height:8px;border-radius:50%;background:var(--mut);animation:bob2 1s infinite ease-in-out}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}@keyframes bob2{50%{transform:translateY(-6px);opacity:.5}}
+.aiHi{margin:auto;text-align:center;max-width:540px}.aiHi h3{font-size:1.6rem}.aiHi p{color:var(--mut);margin:6px 0 14px}
+.sg{display:grid;gap:8px;text-align:left}@media(min-width:600px){.sg{grid-template-columns:1fr 1fr}}
+.sg button,.fu button{padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-size:.9rem;text-align:left;transition:transform .2s,border-color .3s}.sg button:active,.fu button:active{transform:scale(.97)}@media(hover:hover){.sg button:hover,.fu button:hover{border-color:var(--acc)}}
+.fu{display:flex;gap:8px;flex-wrap:wrap}.fu button{padding:7px 12px;border-radius:99px;font-size:.8rem}
+.aiIn{display:flex;gap:8px;align-items:flex-end;padding:8px 16px}.aiIn textarea{min-height:46px;max-height:130px;resize:none;border-radius:16px}.aiIn .btn{margin:0;width:46px;height:46px;padding:0;border-radius:50%;flex:none}
+.aiNote{font-size:.72rem;color:var(--mut);text-align:center;padding:0 16px calc(10px + env(safe-area-inset-bottom))}
+@media(max-width:759px){#dAI[open]{height:100dvh;max-height:none;border-radius:0}}
+.aiUser{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:0 16px 8px;font-size:.82rem;color:var(--mut)}.aiUser b{color:var(--ink)}#aiSt{flex:1 1 200px}#aiOut{margin:0;padding:6px 12px;font-size:.8rem}.aiIn textarea:disabled{opacity:.6}
+#aiSetup ol{padding-left:20px;margin:8px 0;line-height:1.7}#aiSetup .code{height:200px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V19a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z"/><circle cx="12" cy="5" r="1.3" fill="currentColor"/></symbol>
+<symbol id="i-bm" viewBox="0 0 24 24"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z"/></symbol>
+<symbol id="i-req" viewBox="0 0 24 24"><path d="M4 5h16v11H11l-4 3.5V16H4z"/><path d="M12 8v5M9.5 10.5h5"/></symbol>
+<symbol id="i-ai" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.4"/><circle cx="5" cy="6" r="1.6"/><circle cx="19" cy="7" r="1.6"/><circle cx="12" cy="20" r="1.6"/><path d="m10.2 10.4-3.9-3M13.9 10.8l3.8-2.6M12 14.4v4"/></symbol>
+<symbol id="i-all" viewBox="0 0 24 24"><circle cx="5" cy="17" r="1.8"/><circle cx="10" cy="8" r="1.8"/><circle cx="16" cy="14" r="1.8"/><circle cx="20" cy="5" r="1.8"/><path d="m6 15.3 3-5.6M11.4 9.2l3.5 3.6M16.9 12.4l2.2-5.6"/></symbol>
+<symbol id="i-phy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.8" fill="currentColor"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.8" transform="rotate(120 12 12)"/></symbol>
+<symbol id="i-chem" viewBox="0 0 24 24"><path d="M9.5 3h5M10.5 3v6L5 18.5A1.6 1.6 0 0 0 6.4 21h11.2a1.6 1.6 0 0 0 1.4-2.5L13.5 9V3M7.6 15.5h8.8"/><circle cx="11" cy="18.2" r=".8" fill="currentColor"/><circle cx="14.2" cy="17.2" r=".6" fill="currentColor"/></symbol>
+<symbol id="i-zoo" viewBox="0 0 24 24"><ellipse cx="5.5" cy="11" rx="1.7" ry="2.3" transform="rotate(-18 5.5 11)"/><ellipse cx="9.6" cy="6.6" rx="1.7" ry="2.3" transform="rotate(-8 9.6 6.6)"/><ellipse cx="14.4" cy="6.6" rx="1.7" ry="2.3" transform="rotate(8 14.4 6.6)"/><ellipse cx="18.5" cy="11" rx="1.7" ry="2.3" transform="rotate(18 18.5 11)"/><path d="M12 11.5c-3 0-5.5 3.2-5.5 5.6 0 1.9 1.6 2.4 3 2 1-.3 1.6-.5 2.5-.5s1.5.2 2.5.5c1.4.4 3-.1 3-2 0-2.4-2.5-5.6-5.5-5.6z"/></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24"><path d="M5 19C5 10 10 5 19 5c0 9-5 14-14 14z"/><path d="M3.5 20.5 14 10M10 14.5h4M12 12.5v4"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+<symbol id="i-l" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+<symbol id="i-r" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+<symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+<symbol id="i-empty" viewBox="0 0 24 24"><circle cx="7" cy="16" r="2"/><circle cx="17" cy="8" r="2" stroke-dasharray="2 2.2"/><path d="M8.6 14.6l6.8-5.2" stroke-dasharray="2 2.2"/></symbol>
+<symbol id="i-fs" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></symbol><symbol id="i-clr" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol><symbol id="i-cp" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol></defs></svg>
+<header><div class="bar">
+ <div class="brand" id="logo"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="9" fill="var(--acc)"/><path d="M8 19l6-9 6 9H8" fill="none" stroke="var(--accx)" stroke-width="1.6"/><g fill="var(--accx)"><circle cx="8" cy="19" r="2"/><circle cx="14" cy="10" r="2"/><circle cx="20" cy="19" r="2"/></g></svg><span>VISION_S <b>NEURA</b></span></div>
+ <nav id="nav"><i class="ind"></i>
+  <button data-v="home" class="on"><svg class="i " aria-hidden="true"><use href="#i-home"/></svg>Home</button>
+  <button data-v="saved"><svg class="i " aria-hidden="true"><use href="#i-bm"/></svg>Saved</button>
+  <button data-v="req"><svg class="i " aria-hidden="true"><use href="#i-req"/></svg>Request</button>
+  <button data-v="ai"><svg class="i " aria-hidden="true"><use href="#i-ai"/></svg>AI Tutor</button>
+ </nav>
+ <div class="sw"><div class="sin"><svg class="i " aria-hidden="true"><use href="#i-search"/></svg><input class="search" id="q" type="search" placeholder="Search notes, chapters, topics" aria-label="Search notes"></div></div>
+ <button class="ib" id="theme" aria-label="Toggle theme"><svg class="i sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="i moon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+</div></header>
+<main>
+ <section class="hero" id="hero">
+  <svg class="net" viewBox="0 0 420 280" aria-hidden="true"><path pathLength="1" d="M40 210L120 120L220 170L320 70L390 140"/><path pathLength="1" d="M120 120L180 40L320 70M220 170L300 245L390 140"/><circle cx="40" cy="210" r="5"/><circle cx="120" cy="120" r="6"/><circle cx="220" cy="170" r="5"/><circle cx="320" cy="70" r="6"/><circle cx="390" cy="140" r="5"/><circle cx="180" cy="40" r="4"/><circle cx="300" cy="245" r="4"/></svg>
+  <div class="ht"><span class="pill">Class 12 · Share · Learn · Grow</span><h1>Every chapter, one clear place.</h1><p class="lead">Access and share notes, build your knowledge, and stay ahead with precision-crafted chapters.</p>
+   <div class="hb"><a class="btn" href="#notes">Browse notes</a><button class="btn g" data-go="req">Request a chapter</button></div></div>
+  <div class="stats"><div><b id="stN">0</b><span>notes</span></div><div><b id="stF">0</b><span>files</span></div><div><b>4</b><span>subjects</span></div></div>
+ </section>
+ <div class="tiles" id="chips"></div>
+ <div class="sh" id="notes"><h2 id="gt">Latest notes</h2><span id="gc"></span></div>
+ <div class="grid" id="grid"></div>
+ <section class="cta"><div><h3>Missing a chapter?</h3><p>Tell us what you need and it gets added.</p></div><div><button class="btn" data-go="req">Request notes</button><button class="btn g" data-go="saved">Saved notes</button></div></section>
+</main>
+
+<dialog id="dView" class="wide"><div class="dh"><h3 id="vT">Note</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+ <div class="stage" id="stage"></div>
+ <div class="ctl"><button class="btn g" id="prev" style="margin:0"><svg class="i " aria-hidden="true"><use href="#i-l"/></svg><span class="lbl">Prev</span></button><span id="cnt"></span><button class="btn g" id="next" style="margin:0"><span class="lbl">Next</span><svg class="i " aria-hidden="true"><use href="#i-r"/></svg></button><button class="btn g" id="fsBtn" style="margin:0" aria-label="Toggle Fullscreen"><svg class="i" aria-hidden="true"><use href="#i-fs"/></svg><span class="lbl">Fullscreen</span></button><a class="btn" id="dl" style="margin:0" target="_blank" rel="noopener"><svg class="i " aria-hidden="true"><use href="#i-dl"/></svg>Download</a></div>
+ <div class="db" id="vD" style="padding-top:0;color:var(--mut)"></div></dialog>
+
+<dialog id="dPin"><div class="dh"><h3>Admin access</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+ <form class="db" id="fPin"><label for="pin">Admin PIN</label><input id="pin" type="password" autocomplete="off" required><button class="btn">Unlock</button></form></dialog>
+
+<dialog id="dAdm" class="wide"><div class="dh"><h3>Admin studio</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+ <div class="db"><div class="tabs"><button class="btn g" id="tU" style="margin:0">Upload</button><button class="btn g" id="tM" style="margin:0">Manage</button><button class="btn g" id="tS" style="margin:0">Connect Google</button></div>
+ <form id="fUp"><label>Subject</label><select id="fs"></select>
+  <label>Chapter</label><input id="fc" required placeholder="Chapter 3: Current Electricity">
+  <label>Topic</label><input id="ft" required placeholder="Kirchhoff's laws">
+  <label>Description</label><textarea id="fd" placeholder="What does this note cover?"></textarea>
+  <label>Files (images, PDF, Word — images are compressed automatically)</label><input id="ff" type="file" multiple accept="image/*,.pdf,.doc,.docx,.txt">
+  <p id="editInfo" style="color:var(--mut);font-size:.85rem;margin-top:6px"></p>
+  <button class="btn" id="saveBtn">Publish note</button> <button type="button" class="btn g" id="cancelEdit" hidden>Cancel edit</button></form>
+ <div id="mng" hidden></div>
+ <div id="setup" hidden>
+  <p style="color:var(--mut)">One-time setup, free, about 3 minutes:</p>
+  <ol style="padding-left:20px;margin:8px 0;line-height:1.8">
+   <li>Create a Google Sheet, then open <b>Extensions → Apps Script</b>.</li>
+   <li>Delete the sample code, paste the code below, and change <code>PIN</code> to your own.</li>
+   <li>Set <code>OWNER</code> to the email that should receive requests. Choose <code>authorize</code> in the editor and press <b>Run</b> once, then accept the permissions.</li>
+   <li><b>Deploy → New deployment → Web app</b>. Execute as <b>Me</b>, access <b>Anyone</b>. Later code edits need <b>Deploy → Manage deployments → ✏ → New version</b>.</li>
+   <li>Paste the Web app URL below, or put it in <code>const API</code> at the top of the script so every visitor gets it.</li>
+  </ol>
+  <textarea class="code" id="gs" readonly></textarea>
+  <button class="btn g" id="copyGs" type="button">Copy code</button>
+  <label>Web app URL</label><input id="apiIn" placeholder="https://script.google.com/macros/s/.../exec">
+  <button class="btn" id="saveApi" type="button">Save and connect</button></div>
+ </div></dialog>
+
+<dialog id="dReq"><div class="dh"><h3>Request notes</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+ <form class="db" id="fReq"><label>Name</label><input id="rn" required><label>Email</label><input id="re" type="email" required>
+  <label>Subject</label><select id="rs"></select><label>Chapter / unit</label><input id="rc" required>
+  <label>Details</label><textarea id="rd" required></textarea><label>Needed by</label><input id="ru" placeholder="e.g. before Friday">
+  <button class="btn" id="rBtn">Send request</button></form></dialog>
+
+<dialog id="dSoon"><div class="dh"><h3>AI Tutor</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+ <div class="db"><p>Your personal AI study buddy for doubts, explanations and quick revision is being built.</p></div></dialog>
+
+<dialog id="dAI" class="wide"><div class="dh"><h3>Neura Tutor</h3><span style="display:flex;gap:8px"><button class="ib" id="aiClr" aria-label="Clear chat"><svg class="i" aria-hidden="true"><use href="#i-clr"/></svg></button><button class="ib" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></span></div>
+ <div class="aiBar"><div class="seg" id="aiLv"><button data-lv="11">Grade 11</button><button data-lv="12">Grade 12</button></div>
+  <select id="aiSub" aria-label="Subject"><option>Physics</option><option>Chemistry</option><option>Zoology</option><option>Botany</option><option>General</option></select>
+  <select id="aiNote" aria-label="Focus on a note"></select></div>
+ <div class="aiModes" id="aiModes"><button data-m="explain">Explain</button><button data-m="solve">Solve</button><button data-m="quiz">Quiz me (CEE)</button><button data-m="revise">Quick revise</button><button data-m="exam">NEB answer</button></div>
+ <div class="aiUser" id="aiUser"><span id="aiSt"></span><div id="aiGsi"></div><button class="btn g" id="aiOut" hidden>Sign out</button></div>
+ <div class="aiLog" id="aiLog" aria-live="polite"></div>
+ <form class="aiIn" id="aiForm"><textarea id="aiQ" rows="1" maxlength="1500" placeholder="Ask about Grade 11–12 Physics, Chemistry, Zoology, Botany…" aria-label="Your question"></textarea><button class="btn" id="aiSend" aria-label="Send"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button></form>
+ <p class="aiNote">Neura can make mistakes. Check important facts with your NEB textbook and official CEE notices. Don't share personal information.</p></dialog>
+
+<script type="text/plain" id="aiSrc">const CLIENT_ID='';            // your Google OAuth Web client ID (same one as in the page)
+const GUEST_LIMIT=3, USER_LIMIT=30, GUEST_POOL=200; // messages per 24 hours (guest pool = all guests together)
+const MODELS=['gemini-flash-latest','gemini-flash-lite-latest']; // change if Google renames models
+const SYS=`You are Neura, the AI study tutor inside VISION_S NEURA, a free notes hub for Nepali students in NEB Grade 11 and 12 (Science) who are preparing for board exams and for the CEE, the entrance exam for medical and health programmes in Nepal. Subjects: Physics, Chemistry, Zoology, Botany (Biology), with basic maths for numericals.
+Rules:
+- Teach at Grade 11/12 level following the NEB curriculum. Never invent chapter numbers, page numbers, mark distributions or past-paper questions. If unsure whether something is in the NEB syllabus, say so.
+- Be accurate. Show formulae, SI units and every step of a numerical, and check the final answer. If a question is ambiguous, state your assumption.
+- Plain text only, no LaTeX. Use Unicode for maths and chemistry (x², √, Δ, →, H₂O, Ca²⁺). Short paragraphs, **bold** key terms, - bullets, numbered steps. A small table is fine for comparisons.
+- Reply in English by default. If the student writes in Nepali or Romanized Nepali, reply in simple Nepali and keep key terms in English.
+- Keep answers focused, about 150 to 250 words unless asked for more, and end with one short follow-up suggestion.
+- For CEE style MCQs teach speed: the shortcut, the trap options, and why wrong options fail. For NEB written answers use clear definition, steps or derivation, a diagram described in words, and a conclusion.
+- Stay on study topics and politely redirect anything else. For personal medical or mental-health worries, be kind, give no diagnosis, and suggest a trusted adult or a professional. Exam stress is normal: offer a short study plan if asked.
+- You are not an official NEB or Medical Education Commission product. Tell students to confirm dates, syllabus and rules with official notices.`;
+const MD={explain:'Mode: EXPLAIN. Teach the idea simply first with one everyday example (Nepal context when natural), then give the formal NEB-style definition.',solve:'Mode: SOLVE. Use the layout Given, Formula, Substitution, Answer with units, Quick check.',quiz:'Mode: QUIZ. Ask exactly 5 CEE-style MCQs (options A to D) on the topic and do NOT reveal answers. When the student replies, mark each one, explain it, and give a score.',revise:'Mode: REVISE. Give a rapid revision sheet: key points, formulas, a mnemonic and 3 common mistakes.',exam:'Mode: EXAM ANSWER. Write a model NEB-style answer: definition or statement, steps or derivation, diagram described in words, conclusion.'};
+function out(o){return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);}
+function doGet(){return out({ok:true,service:'neura-tutor'});}
+function doPost(e){try{return out(run(JSON.parse(e.postData.contents)));}catch(err){return out({ok:false,error:'The tutor hit a problem. Please try again.'});}}
+function authorize(){SpreadsheetApp.getActive();LockService.getScriptLock();CacheService.getScriptCache();UrlFetchApp.fetch('https://oauth2.googleapis.com/tokeninfo',{muteHttpExceptions:true});}
+function sec(){const p=PropertiesService.getScriptProperties();let s=p.getProperty('SECRET');if(!s){s=Utilities.getUuid()+Utilities.getUuid();p.setProperty('SECRET',s);}return s;}
+function sig(b){return Utilities.base64EncodeWebSafe(Utilities.computeHmacSha256Signature(b,sec()));}
+function mint(u){const b=Utilities.base64EncodeWebSafe(JSON.stringify({i:u.id,e:u.email,n:u.name,x:Date.now()+2592e6}));return b+'.'+sig(b);}
+function chk(t){const a=String(t||'').split('.');if(a.length!=2||sig(a[0])!==a[1])return null;try{const u=JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(a[0])).getDataAsString());return u.x>Date.now()?{id:u.i,email:u.e,name:u.n}:null;}catch(e){return null;}}
+function login(cred){if(!CLIENT_ID)return{ok:false,error:'Google sign-in is not configured yet.'};
+ const r=UrlFetchApp.fetch('https://oauth2.googleapis.com/tokeninfo?id_token='+encodeURIComponent(cred||''),{muteHttpExceptions:true});
+ if(r.getResponseCode()!=200)return{ok:false,error:'Google sign-in failed. Please try again.'};
+ const j=JSON.parse(r.getContentText());
+ if(j.aud!==CLIENT_ID||!(+j.exp>Date.now()/1e3)||String(j.email_verified)!=='true')return{ok:false,error:'Google sign-in could not be verified.'};
+ const u={id:'g:'+j.sub,email:j.email,name:j.name||j.email};return{ok:true,token:mint(u),name:u.name,email:u.email};}
+function q(id,lim,bump,email){const L=LockService.getScriptLock();L.waitLock(8000);try{
+ const ss=SpreadsheetApp.getActive();let sh=ss.getSheetByName('Usage');if(!sh){sh=ss.insertSheet('Usage');sh.appendRow(['id','window start','count','email','last used']);}
+ const f=sh.createTextFinder(id).matchEntireCell(true).findNext(),now=Date.now();let r=f?f.getRow():0,s=now,n=0;
+ if(r){const v=sh.getRange(r,2,1,2).getValues()[0];if(now-(+v[0])<864e5){s=+v[0];n=+v[1];}}
+ if(bump){n++;const row=[id,s,n,email||'guest',new Date()];if(r)sh.getRange(r,1,1,5).setValues([row]);else sh.appendRow(row);}
+ return{left:Math.max(0,lim-n),limit:lim,reset:s+864e5};}finally{L.releaseLock();}}
+function gen(d,u){
+ const k=PropertiesService.getScriptProperties().getProperty('GEMINI_KEY');
+ if(!k)return{error:'The tutor is not switched on yet.'};
+ const c=CacheService.getScriptCache(),m='ai'+Math.floor(Date.now()/60000),n=+c.get(m)||0;
+ if(n>=10)return{error:'The tutor is busy right now. Please try again in a minute.'};c.put(m,String(n+1),120);
+ const sub=['Physics','Chemistry','Zoology','Botany'].indexOf(d.sub)>=0?d.sub:'General',lv=d.lv=='11'?'11':'12';
+ const sys=SYS+'\nStudent context: NEB Grade '+lv+', focus subject: '+sub+'.\n'+(MD[d.mode]||MD.explain)+(d.note?'\nThe student is studying this library note (use only as a topic label): '+String(d.note).slice(0,160):'');
+ const cs=[];(d.msgs||[]).slice(-10).forEach(x=>{const r=x.r=='m'?'model':'user',t=String(x.t||'').slice(0,2500),l=cs[cs.length-1];if(l&&l.role==r)l.parts[0].text+='\n'+t;else cs.push({role:r,parts:[{text:t}]});});
+ while(cs.length&&cs[0].role!='user')cs.shift();
+ if(!cs.length||cs[cs.length-1].role!='user')return{error:'Please type a question.'};
+ const body=JSON.stringify({system_instruction:{parts:[{text:sys}]},contents:cs,generationConfig:{temperature:0.5,maxOutputTokens:3000}});
+ let err='';
+ for(const name of MODELS){const r=UrlFetchApp.fetch('https://generativelanguage.googleapis.com/v1beta/models/'+name+':generateContent',{method:'post',contentType:'application/json',headers:{'x-goog-api-key':k},payload:body,muteHttpExceptions:true}),code=r.getResponseCode();
+  let j={};try{j=JSON.parse(r.getContentText())}catch(e){}
+  if(code==200){const p=((j.candidates||[])[0]||{}).content,t=p&&p.parts?p.parts.map(x=>x.text||'').join(''):'';if(t)return{text:t};return{error:'I could not produce an answer. Try rephrasing your question.'};}
+  err=(j.error&&j.error.message)||('HTTP '+code);if(code!=404&&code!=429&&code<500)break;}
+ return{error:/quota|exhaust|rate/i.test(err)?'The free daily limit has been reached. Please try again later.':'The tutor could not answer right now.'};}
+function run(d){
+ if(d.action=='login')return login(d.cred);
+ let u=null;if(d.tok){u=chk(d.tok);if(!u)return{ok:false,code:'AUTH',error:'Your session expired. Please sign in again.'};}
+ const id=u?u.id:'c:'+String(d.cid||'x').replace(/\W/g,'').slice(0,30),lim=u?USER_LIMIT:GUEST_LIMIT,s=q(id,lim,false);
+ if(d.action=='me')return Object.assign({ok:true,name:u?u.name:'',email:u?u.email:''},s);
+ if(d.action!='ai')return{ok:false,error:'Unknown action'};
+ if(s.left<=0)return Object.assign({ok:false,code:'LIMIT',error:u?'You have used all '+lim+' messages. Your limit refreshes 24 hours after your first message.':'You have used your '+lim+' free messages. Sign in with Google to keep learning.'},s);
+ if(!u&&q('c:POOL',GUEST_POOL,false).left<=0)return Object.assign({ok:false,code:'LIMIT',error:'Guest chat is full for today. Sign in with Google to continue.'},s);
+ const g=gen(d,u);if(g.error)return Object.assign({ok:false,error:g.error},s);
+ const s2=q(id,lim,true,u?u.email:'');if(!u)q('c:POOL',GUEST_POOL,true);
+ return Object.assign({ok:true,text:g.text},s2);}</script>
+<div id="toast" role="status"></div>
+<script type="text/plain" id="gsSrc">const PIN='1234'; // change this
+const OWNER='worldofvisions.official@gmail.com'; // new requests are emailed here
+function sh(n){const ss=SpreadsheetApp.getActive();let s=ss.getSheetByName(n);if(!s){s=ss.insertSheet(n);s.appendRow(n=='Notes'?['id','subject','chapter','topic','description','files','date']:['date','name','email','subject','chapter','details','needed by','status']);}return s;}
+function folder(){const p=PropertiesService.getScriptProperties();let id=p.getProperty('F');if(id)return DriveApp.getFolderById(id);const f=DriveApp.createFolder('VISION_S NEURA Notes');p.setProperty('F',f.getId());return f;}
+function out(o){return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);}
+function pf(v){try{return JSON.parse(v||'[]')}catch(e){return[]}}
+function doGet(){const r=sh('Notes').getDataRange().getValues().slice(1).map(x=>({id:x[0],subject:x[1],chapter:x[2],topic:x[3],description:x[4],files:pf(x[5]),date:x[6]}));return out({ok:true,notes:r});}
+function doPost(e){try{return run(JSON.parse(e.postData.contents));}catch(err){return out({ok:false,error:String(err.message||err)});}}
+function authorize(){MailApp.getRemainingDailyQuota();DriveApp.getRootFolder();SpreadsheetApp.getActive();}
+function run(d){
+ if(d.action=='request'){const t=x=>String(x||'').slice(0,600),r=[d.name,d.email,d.subject,d.chapter,d.details,d.needed].map(t),z=x=>/^[=+\-@]/.test(x)?"'"+x:x;let st='email sent';
+  try{if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(r[1]))throw Error('invalid email');MailApp.sendEmail({to:OWNER,replyTo:r[1],name:'VISION_S NEURA',subject:'[VISION_S NEURA] Request: '+r[2]+' - '+r[3],body:'From: '+r[0]+' <'+r[1]+'>\nSubject: '+r[2]+'\nChapter: '+r[3]+'\nNeeded by: '+r[5]+'\n\n'+r[4]});}catch(err){st='email failed: '+err.message;}
+  sh('Requests').appendRow([new Date(),...r.map(z),st]);return out({ok:true});}
+ const c=CacheService.getScriptCache(),n=+c.get('bad')||0;if(n>=10)return out({ok:false,error:'Too many attempts. Try again in 10 minutes.'});
+ if(d.pin!==PIN){c.put('bad',String(n+1),600);return out({ok:false,error:'Wrong PIN'});}
+ if(d.action=='check')return out({ok:true});
+ if(d.action=='file'){const f=folder().createFile(Utilities.newBlob(Utilities.base64Decode(d.data),d.mime,d.name));f.setSharing(DriveApp.Access.ANYONE_WITH_LINK,DriveApp.Permission.VIEW);return out({ok:true,file:{id:f.getId(),name:d.name,mime:d.mime}});}
+ if(d.action=='note'){const s=sh('Notes'),v=s.getDataRange().getValues(),i=v.findIndex(r=>r[0]==d.id),row=[d.id,d.subject,d.chapter,d.topic,d.description,JSON.stringify(d.files),d.date];if(i>0)s.getRange(i+1,1,1,7).setValues([row]);else s.appendRow(row);return out({ok:true});}
+ if(d.action=='delete'){const s=sh('Notes'),v=s.getDataRange().getValues();for(let i=v.length-1;i>0;i--)if(v[i][0]==d.id){pf(v[i][5]).forEach(f=>{try{DriveApp.getFileById(f.id).setTrashed(true)}catch(_){}});s.deleteRow(i+1);}return out({ok:true});}
+ return out({ok:false,error:'Unknown action'});}</script>
+<script>
+const API=''; // paste your Apps Script Web app URL here so all visitors get the notes
+const SUBJ=['Physics','Chemistry','Zoology','Botany'];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let notes=LS('nn_cache',[]),saved=new Set(LS('nn_saved',[])),filter='all',q='',view='home',pin=sessionStorage.getItem('nn_pin')||'',files=[],editId=null,cur=null,idx=0;
+const api=()=>API||localStorage.getItem('nn_api')||'';
+const thumb=id=>`https://drive.google.com/thumbnail?id=${id}&sz=w900`;
+const prevU=id=>`https://drive.google.com/file/d/${id}/preview`;
+const dlU=id=>`https://drive.google.com/uc?export=download&id=${id}`;
+const isImg=f=>(f.mime||'').startsWith('image/');
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('s');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('s'),3200)}
+
+async function call(b){const u=api();if(!u)throw Error('Google link is not connected yet');const r=await fetch(u,{method:'POST',body:JSON.stringify(b)});const j=await r.json();if(!j.ok)throw Error(j.error||'Request failed');return j}
+async function load(){const u=api();if(u){try{const j=await (await fetch(u)).json();notes=j.notes.reverse();put('nn_cache',notes)}catch(e){toast('Offline: showing the last loaded notes')}}const had=notes.length&&!loading;loading=false;still=!!had;render();still=false}
+
+const SC={Physics:1,Chemistry:2,Zoology:3,Botany:4},sv=s=>SC[s]?`--c:var(--s${SC[s]});--ct:var(--t${SC[s]})`:'--c:var(--acc);--ct:var(--accx)',IC={all:'all',Physics:'phy',Chemistry:'chem',Zoology:'zoo',Botany:'bot'};
+const ic=(n,c='')=>`<svg class="i ${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const doc=e=>`<svg class="doc" viewBox="0 0 64 80" aria-hidden="true"><path d="M8 4h32l16 16v52a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="var(--card)" stroke="var(--c)" stroke-width="2.5"/><path d="M40 4v16h16z" fill="var(--c)" opacity=".4"/><path d="M14 34h36M14 42h36M14 50h22" stroke="var(--c)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/><rect x="12" y="57" width="30" height="13" rx="4" fill="var(--c)"/><text x="27" y="66.6" text-anchor="middle" font-size="8.5" font-weight="800" fill="var(--ct)" font-family="DM Sans,sans-serif">${e}</text></svg>`;
+let loading=false,still=false;
+const card=(n,k)=>{const F=n.files||[],f=F[0],img=f&&isImg(f),ext=f?(f.name.split('.').pop()||'').toUpperCase().slice(0,4):'';return `<article class="card" style="${sv(n.subject)};--i:${Math.min(k,9)}"><div class="thumb" data-o="${n.id}" ${img?`style="background-image:url('${thumb(f.id)}')"`:''}>${img?'':`${doc(ext||'FILE')}`}<span class="tag">${ic(IC[n.subject]||'all')}<em>${esc(n.subject)}</em></span><span class="pc">${F.length} file${F.length===1?'':'s'}${img||!ext?'':' · '+esc(ext)}</span></div><button class="bm${saved.has(n.id)?' on':''}" data-b="${n.id}" aria-label="${saved.has(n.id)?'Remove bookmark':'Bookmark'}">${ic('bm')}</button><div class="cb" data-o="${n.id}"><h3>${esc(n.topic)}</h3><div class="ch">${esc(n.chapter)}</div>${n.description?`<p>${esc(n.description)}</p>`:''}<div class="meta"><span>${esc(n.date)}</span><span class="op">Open${ic('r')}</span></div></div></article>`};
+function render(){
+ cnt($('#stN'),notes.length);cnt($('#stF'),notes.reduce((a,n)=>a+(n.files||[]).length,0));
+ $('#hero').hidden=view!=='home'||!!q;
+ chips();
+ const L=notes.filter(n=>(view!=='saved'||saved.has(n.id))&&(filter==='all'||n.subject===filter)&&[n.topic,n.chapter,n.subject,n.description].join(' ').toLowerCase().includes(q));
+ $('#grid').classList.toggle('still',still);$('#gt').textContent=view==='saved'?'Saved notes':q?'Search results':'Latest notes';$('#gc').textContent=loading?'Loading…':L.length+' shown';
+ $('#grid').innerHTML=loading?'<div class="sk"></div>'.repeat(3):L.length?L.map(card).join(''):`<div class="empty">${ic(view==='saved'?'bm':'empty','big')}${!api()?'Notes will appear here once the Google link is connected.':view==='saved'?'No saved notes yet. Tap the star on any note.':'No notes found.'}</div>`}
+
+function open(id){cur=notes.find(n=>n.id===id);if(!cur)return;idx=0;$('#vT').textContent=cur.topic;$('#vD').textContent=`${cur.subject} · ${cur.chapter}${cur.description?' — '+cur.description:''}`;slide();$('#dView').showModal()}
+function slide(d=0){$('#stage').style.setProperty('--dx',d*48+'px');const F=cur.files||[],f=F[idx];$('#stage').innerHTML=!f?'<p>No file</p>':isImg(f)?`<img src="${thumb(f.id).replace('w900','w1600')}" alt="${esc(cur.topic)}">`:`<iframe src="${prevU(f.id)}" title="${esc(f.name)}"></iframe>`;$('#cnt').textContent=F.length?`${idx+1} / ${F.length}`:'';$('#dl').href=f?dlU(f.id):'#';$('#prev').disabled=idx<1;$('#next').disabled=idx>=F.length-1}
+
+function shrink(file){return new Promise(res=>{if(!file.type.startsWith('image/')||file.type==='image/gif')return res(file);const i=new Image();i.onload=()=>{const s=Math.min(1,1600/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);c.toBlob(b=>res(b||file),'image/jpeg',.82)};i.onerror=()=>res(file);i.src=URL.createObjectURL(file)})}
+const b64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(b)});
+
+async function save(e){e.preventDefault();const btn=$('#saveBtn'),old=editId?notes.find(n=>n.id===editId):null;btn.disabled=true;
+ try{const nf=[];for(let i=0;i<files.length;i++){btn.textContent=`Uploading ${i+1} of ${files.length}…`;const b=await shrink(files[i]);if(b.size>15e6)throw Error(files[i].name+' is over 15 MB');nf.push((await call({action:'file',pin,name:files[i].name,mime:b.type||files[i].type||'application/octet-stream',data:await b64(b)})).file)}
+  const all=[...(old?old.files:[]),...nf];if(!all.length)throw Error('Add at least one file');
+  btn.textContent='Saving to Google Sheet…';
+  await call({action:'note',pin,id:old?old.id:'n'+Date.now(),subject:$('#fs').value,chapter:$('#fc').value.trim(),topic:$('#ft').value.trim(),description:$('#fd').value.trim(),files:all,date:old?old.date:new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})});
+  toast(old?'Note updated':'Note published');resetForm();await load();showTab('M')}
+ catch(err){toast(err.message)}
+ btn.disabled=false;btn.textContent=editId?'Save changes':'Publish note'}
+function resetForm(){editId=null;files=[];$('#fUp').reset();$('#cancelEdit').hidden=true;$('#editInfo').textContent='';$('#saveBtn').textContent='Publish note'}
+function showTab(t){$('#fUp').hidden=t!=='U';$('#mng').hidden=t!=='M';$('#setup').hidden=t!=='S';if(t==='M')manage()}
+function manage(){$('#mng').innerHTML=notes.length?notes.map(n=>`<div class="row"><div><b>${esc(n.topic)}</b><small style="color:var(--mut)">${esc(n.subject)} · ${(n.files||[]).length} file(s)</small></div><span><button class="btn g" style="margin:0" data-e="${n.id}">Edit</button> <button class="btn g" style="margin:0" data-d="${n.id}">Delete</button></span></div>`).join(''):'<p class="empty">No notes yet.</p>'}
+function edit(id){const n=notes.find(x=>x.id===id);editId=id;files=[];$('#fs').value=n.subject;$('#fc').value=n.chapter;$('#ft').value=n.topic;$('#fd').value=n.description;$('#ff').value='';$('#editInfo').textContent=`Editing. ${(n.files||[]).length} file(s) kept; any files you add now are appended.`;$('#saveBtn').textContent='Save changes';$('#cancelEdit').hidden=false;showTab('U')}
+async function del(id){if(!confirm('Delete this note and its files from Google Drive?'))return;try{await call({action:'delete',pin,id});toast('Note deleted');await load();manage()}catch(e){toast(e.message)}}
+
+async function unlock(e){e.preventDefault();const v=$('#pin').value;if(!api()){pin=v;$('#dPin').close();openAdmin('S');return}
+ try{await call({action:'check',pin:v});pin=v;sessionStorage.setItem('nn_pin',v);$('#dPin').close();openAdmin('U')}catch(err){toast(err.message==='Wrong PIN'?'Incorrect PIN':err.message);$('#pin').value=''}}
+function openAdmin(t){$('#fs').innerHTML=SUBJ.map(s=>`<option>${s}</option>`).join('');$('#apiIn').value=api();showTab(t);$('#dAdm').showModal()}
+function gate(){if(pin&&api())return openAdmin('U');$('#pin').value='';$('#dPin').showModal()}
+
+async function sendReq(e){e.preventDefault();const d={action:'request',name:$('#rn').value,email:$('#re').value,subject:$('#rs').value,chapter:$('#rc').value,details:$('#rd').value,needed:$('#ru').value||'Standard'};
+ if(!api()){location.href=`mailto:worldofvisions.official@gmail.com?subject=${encodeURIComponent('[VISION_S NEURA Request] '+d.subject+' - '+d.chapter)}&body=${encodeURIComponent(`${d.name} (${d.email})\n${d.details}\nNeeded:${d.needed}`)}`;return}
+ if(Date.now()-LS('nn_rq',0)<30000)return toast('Please wait a few seconds before sending another request');
+ $('#rBtn').disabled=true;$('#rBtn').textContent='Sending…';try{await call(d);put('nn_rq',Date.now());toast('Request sent. Thank you!');$('#fReq').reset();shut($('#dReq'))}catch(err){toast(err.message)}$('#rBtn').disabled=false;$('#rBtn').textContent='Send request'}
+
+function setView(v){if(v==='req')return $('#dReq').showModal();if(v==='ai')return window.openAI?window.openAI():toast('AI Tutor is unavailable right now');view=v;$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));render();moveInd();scrollTo({top:0})}
+
+// events
+$('#q').oninput=e=>{q=e.target.value.trim().toLowerCase();still=true;render();still=false};
+$('#chips').onclick=e=>{const b=e.target.closest('[data-s]');if(b){filter=b.dataset.s;render()}};
+$('#grid').onclick=e=>{const b=e.target.closest('[data-b]');if(b){const id=b.dataset.b;saved.has(id)?saved.delete(id):saved.add(id);put('nn_saved',[...saved]);const on=saved.has(id);b.classList.toggle('on',on);b.setAttribute('aria-label',on?'Remove bookmark':'Bookmark');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');if(view==='saved'&&!on){b.closest('.card').classList.add('out');setTimeout(()=>{still=true;render();still=false},280)}return}const o=e.target.closest('[data-o]');if(o)open(o.dataset.o)};
+$('#nav').onclick=e=>{const b=e.target.closest('button');if(b)setView(b.dataset.v)}; $$('[data-go]').forEach(b=>b.onclick=()=>setView(b.dataset.go));
+$('#prev').onclick=()=>{idx--;slide(-1)};$('#next').onclick=()=>{idx++;slide(1)};
+$('#fsBtn').onclick=()=>{const st=$('#stage');if(!document.fullscreenElement){if(st.requestFullscreen)st.requestFullscreen();else if(st.webkitRequestFullscreen)st.webkitRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen()}}; $$('[data-close]').forEach(b=>b.onclick=()=>shut(b.closest('dialog')));$$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)shut(d)}));$$('dialog').forEach(d=>d.addEventListener('cancel',e=>{e.preventDefault();shut(d)}));$('#fPin').onsubmit=unlock;$('#fUp').onsubmit=save;$('#fReq').onsubmit=sendReq;
+$('#ff').onchange=e=>{files=[...e.target.files]};
+$('#cancelEdit').onclick=resetForm;
+$('#tU').onclick=()=>showTab('U');$('#tM').onclick=()=>showTab('M');$('#tS').onclick=()=>showTab('S');
+$('#mng').onclick=e=>{const a=e.target.closest('[data-e]'),d=e.target.closest('[data-d]');if(a)edit(a.dataset.e);if(d)del(d.dataset.d)};
+$('#copyGs').onclick=()=>navigator.clipboard.writeText($('#gs').value).then(()=>toast('Code copied'),()=>{$('#gs').select();toast('Press Ctrl+C to copy')});
+$('#saveApi').onclick=()=>{const v=$('#apiIn').value.trim();if(!/^https:\/\/script\.google\.com\//.test(v))return toast('Paste the Web app URL that starts with https://script.google.com');localStorage.setItem('nn_api',v);toast('Connected');load()};
+$('#theme').onclick=e=>{const flip=()=>{const d=document.documentElement.dataset.t==='dark'?'':'dark';d?document.documentElement.dataset.t='dark':delete document.documentElement.dataset.t;localStorage.setItem('nn_theme',d)};
+ if(!document.startViewTransition||matchMedia('(prefers-reduced-motion:reduce)').matches)return flip();
+ const r=e.currentTarget.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,R=Math.hypot(Math.max(x,innerWidth-x),Math.max(y,innerHeight-y));
+ document.startViewTransition(flip).ready.then(()=>document.documentElement.animate({clipPath:[`circle(0 at ${x}px ${y}px)`,`circle(${R}px at ${x}px ${y}px)`]},{duration:650,easing:'cubic-bezier(.65,0,.35,1)',pseudoElement:'::view-transition-new(root)'}))};
+let clicks=0,ct;$('#logo').onclick=()=>{clearTimeout(ct);if(++clicks>=3){clicks=0;gate()}else ct=setTimeout(()=>clicks=0,600)};
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='a'){e.preventDefault();gate()}});
+
+let tx=0;const st=$('#stage');st.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+const go=d=>{const n=(cur&&cur.files||[]).length;if(idx+d>=0&&idx+d<n){idx+=d;slide(d)}};
+st.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(d<0?1:-1)});
+addEventListener('keydown',e=>{if($('#dView').open&&(e.key==='ArrowRight'||e.key==='ArrowLeft'))go(e.key==='ArrowRight'?1:-1)});
+// motion helpers
+const calm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+function shut(d){if(!d.open||d.classList.contains('out'))return;if(calm())return d.close();d.classList.add('out');setTimeout(()=>{d.classList.remove('out');d.close();d.style.transform=''},230)}
+function cnt(el,to){const from=+el.textContent||0;if(from===to||calm()){el.textContent=to;return}const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/800);el.textContent=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
+function chips(){const el=$('#chips');if(!el.children.length)el.innerHTML=['all',...SUBJ].map(s=>`<button class="tile" data-s="${s}" style="${sv(s)}">${ic(IC[s])}<b>${s==='all'?'All subjects':s}</b><small></small></button>`).join('');
+ $$('#chips .tile').forEach(t=>{const s=t.dataset.s,c=s==='all'?notes.length:notes.filter(n=>n.subject===s).length;t.classList.toggle('on',filter===s);t.querySelector('small').textContent=`${c} note${c===1?'':'s'}`})}
+function moveInd(){const b=$('#nav .on'),n=$('#nav');if(!b)return;n.style.setProperty('--x',b.offsetLeft+'px');n.style.setProperty('--w',b.offsetWidth+'px');requestAnimationFrame(()=>n.classList.add('rdy'))}
+addEventListener('resize',moveInd);document.fonts&&document.fonts.ready.then(moveInd);
+{const h=$('header');let ly=0;addEventListener('scroll',()=>{const y=scrollY;h.classList.toggle('min',y>ly&&y>140&&innerWidth<860&&document.activeElement!==$('#q'));h.classList.toggle('sc',y>8);ly=y},{passive:true})} $$('.dh').forEach(h=>{const d=h.closest('dialog');let y0=null;
+ h.addEventListener('touchstart',e=>{if(innerWidth<760){y0=e.touches[0].clientY;d.style.transition='none'}},{passive:true});
+ h.addEventListener('touchmove',e=>{if(y0!==null)d.style.transform=`translateY(${Math.max(0,e.touches[0].clientY-y0)}px)`},{passive:true});
+ h.addEventListener('touchend',e=>{if(y0===null)return;const dy=e.changedTouches[0].clientY-y0;y0=null;d.style.transition='';if(dy>90)shut(d);else d.style.transform=''})});
+// init
+{const th=localStorage.getItem('nn_theme');if(th==='dark'||(th===null&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.dataset.t='dark'}
+$('#rs').innerHTML=SUBJ.map(s=>`<option>${s}</option>`).join('');
+$('#gs').value=$('#gsSrc').textContent;
+loading=!notes.length&&!!api();render();moveInd();load();
+if(location.hash==='#admin')gate();
+</script>
+<script>
+// ===== AI Tutor: fully separate module. If anything here fails, the rest of the site is unaffected. =====
+const AI_API='';    // paste the TUTOR Apps Script Web app URL here
+const AI_CLIENT=''; // paste your Google OAuth Client ID here
+(function(){try{
+const ST={Physics:['Explain Kirchhoff’s laws with an example','Solve: a 2 kg block slides down a 30° rough incline (μ = 0.2)','Quiz me on Current Electricity, CEE style','Revise Wave Optics in 2 minutes'],Chemistry:['Explain hybridisation with sp, sp² and sp³ examples','Balance this redox: KMnO₄ + HCl → KCl + MnCl₂ + Cl₂ + H₂O','Quiz me on Chemical Bonding, CEE style','Revise periodic trends on one sheet'],Zoology:['Explain the cardiac cycle step by step','Mitosis vs meiosis in a table','Quiz me on Human Physiology, CEE style','Revise Animal Classification with mnemonics'],Botany:['Explain the light and dark reactions of photosynthesis','Monocot vs dicot root in a table','Quiz me on Plant Physiology, CEE style','Revise the Plant Kingdom with mnemonics'],General:['Make me a 7-day CEE revision plan','How do I write a full-marks 5-mark NEB answer?','How can I avoid careless mistakes in MCQs?','How do I revise Biology for NEB and CEE together?']};
+let cid=LS('nn_cid','');if(!cid){cid=Math.random().toString(36).slice(2,12);put('nn_cid',cid)}
+const aip=LS('nn_aip',{}),ai={lv:aip.lv||'12',sub:aip.sub||'Physics',mode:aip.mode||'explain',note:'',msgs:LS('nn_ai',[]).filter(m=>!m.x),busy:false};
+function md(t){const L=esc(t).split('\n');let o='',m='';const cl=()=>{if(m){o+=`</${m}>`;m=''}},inl=x=>x.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<code>$1</code>');
+ for(let i=0;i<L.length;i++){const l=L[i].trim();
+  if(/^\|.*\|$/.test(l)){cl();let R=[];while(i<L.length&&/^\|.*\|$/.test(L[i].trim())){R.push(L[i].trim());i++}i--;R=R.filter(r=>!/^\|[\s:\-|]+\|$/.test(r));o+='<div class="tw"><table>'+R.map((r,k)=>'<tr>'+r.slice(1,-1).split('|').map(c=>`<${k?'td':'th'}>${inl(c.trim())}</${k?'td':'th'}>`).join('')+'</tr>').join('')+'</table></div>';continue}
+  const b=l.match(/^[-*•]\s+(.*)/),n=l.match(/^\d+[.)]\s+(.*)/);
+  if(b||n){const k=b?'ul':'ol';if(m!==k){cl();o+=`<${k}>`;m=k}o+=`<li>${inl((b||n)[1])}</li>`;continue}
+  cl();if(l)o+=`<p>${inl(l)}</p>`}
+ cl();return o}
+function aiSync(){$$('#aiLv button').forEach(b=>b.classList.toggle('on',b.dataset.lv===ai.lv));$$('#aiModes button').forEach(b=>b.classList.toggle('on',b.dataset.m===ai.mode));$('#aiSub').value=ai.sub;put('nn_aip',{lv:ai.lv,sub:ai.sub,mode:ai.mode})}
+function aiRender(){const g=$('#aiLog'),M=ai.msgs,last=M[M.length-1];
+ g.innerHTML=M.length?M.map((m,i)=>m.r==='u'?`<div class="mu">${esc(m.t)}</div>`:`<div class="mm"><div class="mb">${md(m.t)}</div>${m.x?'':`<button class="cpb" data-cp="${i}" aria-label="Copy answer">${ic('cp')}</button>`}</div>`).join(''):`<div class="aiHi"><h3>Hi, I’m Neura</h3><p>Your study partner for NEB Grade ${ai.lv} and CEE preparation. Pick a subject and a mode, then ask anything.</p><div class="sg">${ST[ai.sub].map(s=>`<button data-st="${esc(s)}">${esc(s)}</button>`).join('')}</div></div>`;
+ if(ai.busy)g.insertAdjacentHTML('beforeend','<div class="mm"><div class="mb dots"><i></i><i></i><i></i></div></div>');
+ else if(last&&last.r==='m'&&!last.x)g.insertAdjacentHTML('beforeend','<div class="fu">'+['Explain it more simply','Give me one more example','Test me with 3 MCQs'].map(s=>`<button data-st="${s}">${s}</button>`).join('')+'</div>');
+ g.scrollTop=g.scrollHeight}
+function aiGrow(){const q=$('#aiQ');q.style.height='auto';q.style.height=Math.min(q.scrollHeight,130)+'px'}
+const aiUrl=()=>AI_API||localStorage.getItem('nn_aiapi')||'',aiCid=()=>AI_CLIENT||localStorage.getItem('nn_aicid')||'';
+let S=LS('nn_ais',null),Q=null,tm=0;
+async function acall(b){const u=aiUrl();if(!u)throw Error('The tutor is not connected yet.');let j;try{j=await (await fetch(u,{method:'POST',body:JSON.stringify(b)})).json()}catch(e){throw Error('Could not reach the tutor. Check your connection and try again.')}
+ if(!j.ok){const e=Error(j.error||'Request failed');e.code=j.code;e.q=j;throw e}return j}
+const rem=ms=>{const m=Math.max(0,Math.ceil((ms-Date.now())/6e4));return m>=60?Math.floor(m/60)+'h '+m%60+'m':m+'m'};
+function setQ(j){if(j&&j.limit!=null){Q={left:j.left,limit:j.limit,reset:j.reset};stat()}}
+function setSess(v){S=v;v?put('nn_ais',v):localStorage.removeItem('nn_ais');Q=null;stat()}
+function stat(){const li=!!S,out=!!Q&&Q.left<=0;$('#aiGsi').hidden=li||!aiCid();$('#aiOut').hidden=!li;
+ const left=Q?`${Q.left} of ${Q.limit} message${Q.limit===1?'':'s'} left${li&&Q.left<Q.limit?' · refreshes in '+rem(Q.reset):''}`:'';
+ $('#aiSt').innerHTML=li?`<b>${esc(S.name||S.email||'Signed in')}</b>${left?' · '+left:''}`:`<b>Guest</b> · ${left||'a few free messages'}${aiCid()?'. Sign in with Google for '+(Q&&Q.limit===3?'30':'more')+' messages every 24 hours.':''}`;
+ $('#aiQ').disabled=out;$('#aiSend').disabled=out;$('#aiQ').placeholder=out?(li?'Limit reached. Refreshes in '+rem(Q.reset):'Sign in with Google to keep chatting'):'Ask about Grade 11–12 Physics, Chemistry, Zoology, Botany…'}
+async function me(){if(!aiUrl()){$('#aiSt').textContent='The tutor is not connected yet.';return}
+ try{const j=await acall({action:'me',tok:S?S.t:'',cid});setQ(j);if(S&&j.name&&S.name!==j.name){S.name=j.name;put('nn_ais',S);stat()}}catch(e){if(e.code==='AUTH'){setSess(null);me()}else $('#aiSt').textContent='The tutor is offline right now. Everything else on the site works normally.'}}
+async function onCred(r){try{const j=await acall({action:'login',cred:r.credential});setSess({t:j.token,name:j.name,email:j.email});toast('Signed in');me()}catch(e){toast(e.message)}}
+function gsi(){if(!aiCid()||gsi.p)return;gsi.p=new Promise((ok,no)=>{const x=document.createElement('script');x.src='https://accounts.google.com/gsi/client';x.async=true;x.onerror=no;x.onload=()=>{try{google.accounts.id.initialize({client_id:aiCid(),callback:onCred});google.accounts.id.renderButton($('#aiGsi'),{theme:'outline',size:'medium',shape:'pill',text:'signin_with'});ok()}catch(e){no(e)}};document.head.appendChild(x)});gsi.p.catch(()=>{$('#aiGsi').textContent='Google sign-in could not load.'})}
+async function aiSend(t){t=(t||'').trim();if(!t||ai.busy)return;ai.msgs.push({r:'u',t});$('#aiQ').value='';aiGrow();ai.busy=true;aiRender();
+ try{const j=await acall({action:'ai',tok:S?S.t:'',cid,lv:ai.lv,sub:ai.sub,mode:ai.mode,note:ai.note,msgs:ai.msgs.filter(m=>!m.x).slice(-10)});ai.msgs.push({r:'m',t:j.text});setQ(j)}
+ catch(e){if(e.code==='AUTH')setSess(null);if(e.q)setQ(e.q);ai.msgs.push({r:'m',t:e.message,x:1})}
+ ai.busy=false;ai.msgs=ai.msgs.slice(-24);put('nn_ai',ai.msgs.filter(m=>!m.x));aiRender();stat()}
+function openAI(){$('#aiNote').innerHTML='<option value="">Focus on a note (optional)</option>'+notes.map(n=>`<option value="${esc(n.id)}">${esc(n.subject)} · ${esc(n.topic)}</option>`).join('');$('#aiNote').value='';ai.note='';aiSync();aiRender();stat();$('#dAI').showModal();gsi();me();clearInterval(tm);tm=setInterval(()=>$('#dAI').open?stat():clearInterval(tm),6e4);if(innerWidth>=760)$('#aiQ').focus()}
+$('#aiOut').onclick=()=>{setSess(null);try{google.accounts.id.disableAutoSelect()}catch(e){}me()};
+$('#aiLv').onclick=e=>{const b=e.target.closest('[data-lv]');if(b){ai.lv=b.dataset.lv;aiSync();if(!ai.msgs.length)aiRender()}};
+$('#aiModes').onclick=e=>{const b=e.target.closest('[data-m]');if(b){ai.mode=b.dataset.m;aiSync();$('#aiQ').focus()}};
+$('#aiSub').onchange=e=>{ai.sub=e.target.value;aiSync();if(!ai.msgs.length)aiRender()};
+$('#aiNote').onchange=e=>{const n=notes.find(x=>x.id===e.target.value);ai.note=n?`${n.subject} - ${n.chapter}: ${n.topic}`:'';if(n&&SUBJ.includes(n.subject)){ai.sub=n.subject;aiSync();if(!ai.msgs.length)aiRender()}};
+$('#aiForm').onsubmit=e=>{e.preventDefault();aiSend($('#aiQ').value)};
+$('#aiQ').oninput=aiGrow;$('#aiQ').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&innerWidth>=760){e.preventDefault();aiSend($('#aiQ').value)}};
+$('#aiLog').onclick=e=>{const s=e.target.closest('[data-st]'),c=e.target.closest('[data-cp]');if(s)aiSend(s.dataset.st);if(c)navigator.clipboard.writeText(ai.msgs[+c.dataset.cp].t).then(()=>toast('Answer copied'),()=>toast('Could not copy'))};
+$('#aiClr').onclick=()=>{ai.msgs=[];put('nn_ai',[]);aiRender()};
+const tabs=document.querySelector('#dAdm .tabs');
+if(tabs){const b=document.createElement('button');b.className='btn g';b.id='tA';b.style.margin='0';b.textContent='AI Tutor setup';tabs.appendChild(b);
+ const p=document.createElement('div');p.id='aiSetup';p.hidden=true;
+ p.innerHTML=`<p style="color:var(--mut)">The tutor runs on its own Apps Script, so it can never break your notes.</p><ol><li>Create a <b>new</b> Google Sheet (name it "Neura AI usage"), open <b>Extensions → Apps Script</b> and paste the code below.</li><li><b>Project Settings (⚙) → Script properties</b>: add <code>GEMINI_KEY</code> (free key from aistudio.google.com/apikey).</li><li>Google Cloud Console → <b>APIs &amp; Services → Credentials → Create OAuth client ID → Web application</b>. Under Authorized JavaScript origins add your website address. Set the consent screen to External and publish it. Copy the Client ID into <code>CLIENT_ID</code> in the script.</li><li>Choose <code>authorize</code> and Run once, then <b>Deploy → New deployment → Web app</b> (Execute as Me, access Anyone).</li><li>Put the Web app URL and the Client ID into <code>AI_API</code> and <code>AI_CLIENT</code> at the top of the tutor script in this page, or test on this browser only with the fields below.</li></ol><textarea class="code" id="aiCode" readonly></textarea><button class="btn g" id="aiCopy" type="button">Copy code</button><label>Tutor Web app URL</label><input id="aiUrlIn" placeholder="https://script.google.com/macros/s/.../exec"><label>Google Client ID</label><input id="aiCidIn" placeholder="1234-abc.apps.googleusercontent.com"><button class="btn" id="aiSave" type="button">Save for this browser</button>`;
+ tabs.parentNode.appendChild(p);$('#aiCode').value=$('#aiSrc').textContent;$('#aiUrlIn').value=aiUrl();$('#aiCidIn').value=aiCid();
+ $('#aiCopy').onclick=()=>navigator.clipboard.writeText($('#aiCode').value).then(()=>toast('Code copied'),()=>toast('Press Ctrl+C to copy'));
+ $('#aiSave').onclick=()=>{localStorage.setItem('nn_aiapi',$('#aiUrlIn').value.trim());localStorage.setItem('nn_aicid',$('#aiCidIn').value.trim());toast('Saved. Reload the page to apply.')};
+ const st=window.showTab;window.showTab=t=>{st(t==='A'?'X':t);p.hidden=t!=='A'};b.onclick=()=>showTab('A')}
+window.openAI=openAI;
+}catch(err){console.warn('AI Tutor failed to start',err)}})();
+</script>
+</body>
+</html>
