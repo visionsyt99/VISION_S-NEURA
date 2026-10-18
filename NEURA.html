@@ -408,7 +408,8 @@ function run(d){
  if(d.action=='delete'){const s=sh('Notes'),v=s.getDataRange().getValues();for(let i=v.length-1;i>0;i--)if(v[i][0]==d.id){pf(v[i][5]).forEach(f=>{try{DriveApp.getFileById(f.id).setTrashed(true)}catch(_){}});s.deleteRow(i+1);}return out({ok:true});}
  return out({ok:false,error:'Unknown action'});}</script>
 <script>
-const API='https://script.google.com/macros/s/AKfycbzZQ68W7iGDRgmTzVnQByEBCRT9q-7SB3d5uX9fYP80aGTakdeYZCy0nvdv8fa3qroU/exec'; // notes Apps Script Web app (public URL, safe to keep here)
+const API='https://script.google.com/macros/s/AKfycby55445KstXmOb509c5Z1mmukNVcFOw0kFsgpp79xfcu_w7UmRx1YBG7X2RldTdMxgB/exec';
+ // notes Apps Script Web app (public URL, safe to keep here)
 const SUBJ=['Physics','Chemistry','Zoology','Botany'];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
