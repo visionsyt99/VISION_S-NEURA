@@ -88,7 +88,7 @@ textarea{min-height:90px;resize:vertical}
 .stage:fullscreen img{border-radius:0;box-shadow:none}
 .ctl{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 16px}
 .ctl .btn{padding:10px 16px}
-#vD{padding:0 18px 16px;font-size:.9rem;max-height:84px;overflow:auto}
+#vD{padding:0 18px 16px;font-size:.9rem;max-height:160px;overflow:auto;color:var(--mut)}
 .row{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
 .row div{min-width:0}.row b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tabs{display:flex;gap:8px;margin-bottom:8px;overflow-x:auto}.tabs .btn{margin:0;flex:none}
@@ -323,20 +323,74 @@ dialog::backdrop{background:var(--bd);-webkit-backdrop-filter:blur(8px);backdrop
 :root:not([data-t=dark]) .row{border-bottom-color:var(--line)}
 :root:not([data-t=dark]) .pc{background:rgba(25,13,54,.55)}
 
-/* Note tools and reader enhancements */
-.note-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px}
-.note-tools select{width:auto;min-width:160px;flex:1 1 160px}
-.reader-thumbs{display:flex;gap:9px;overflow-x:auto;padding:10px 18px;scrollbar-width:thin}
-.reader-thumb{flex:0 0 76px;width:76px;height:66px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer}
-.reader-thumb img{width:100%;height:100%;object-fit:cover}
-.reader-thumb.active{border:2px solid var(--acc)}
-.reader-extra{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 18px}
-.zoom-controls{display:flex;align-items:center;gap:8px}
-.zoom-controls .ib{font-size:1.25rem}
-#zoomLevel{min-width:48px;text-align:center;font-size:.85rem;color:var(--mut)}
-#revisionBtn.revised{background:var(--acc);color:var(--accx);border-color:var(--acc)}
-#recentSection{margin:22px 0}
-@media(max-width:599px){.note-tools select{min-width:0;width:100%;flex-basis:100%}.reader-extra{align-items:stretch}.zoom-controls{flex-wrap:wrap}}
+/* ===== v5: sorting, file filters, recent, thumbnail strip, zoom, chapter reference, revision ===== */
+.tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;margin:-2px 0 16px}
+.seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;max-width:100%;padding:2px}
+.seg::-webkit-scrollbar{display:none}
+.chp{flex:none;display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:99px;border:1px solid var(--gb);background:var(--glass3);color:var(--ink);font-size:.85rem;font-weight:600;transition:transform .25s var(--e),background .3s,box-shadow .3s}
+.chp:active{transform:scale(.95)}
+.chp .i{width:16px;height:16px}
+.chp em{font-style:normal;font-size:.72rem;opacity:.8;padding:1px 7px;border-radius:99px;background:color-mix(in srgb,var(--ink) 10%,transparent)}
+.chp.on{background:linear-gradient(135deg,#6a3df0,#3a0ca3 75%);color:#fff;border-color:rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 22px -10px #3a0ca3}
+.chp.on em{background:rgba(255,255,255,.22)}
+.sortw{display:flex;align-items:center;gap:8px;color:var(--mut);font-size:.82rem;font-weight:700}
+.sortw .i{width:18px;height:18px}
+.sortw select{width:auto;min-height:40px;padding:8px 12px;border-radius:12px;font-weight:600;color:var(--ink)}
+@media(max-width:599px){.tools{flex-direction:column;align-items:stretch}.sortw{justify-content:space-between}.sortw select{flex:1}}
+
+.rec{margin:0 0 20px}
+.rec .rh{display:flex;justify-content:space-between;align-items:center;margin:0 2px 10px}
+.rec h3{font-size:1.05rem;display:flex;align-items:center;gap:8px}.rec h3 .i{width:19px;height:19px;color:var(--hi)}
+.rec .rh button{font-size:.82rem;font-weight:700;color:var(--hi);padding:6px 10px;border-radius:10px}
+.rlist{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;margin:0 -16px;padding:2px 16px 8px;scrollbar-width:none}
+.rcard{flex:none;scroll-snap-align:start;width:176px;display:grid;gap:2px;text-align:left;padding:8px 8px 10px;border-radius:18px;background:var(--glass3);border:1px solid var(--gb);box-shadow:inset 0 1px 0 var(--hl)}
+.rcard .rt{aspect-ratio:16/10;border-radius:12px;background:color-mix(in srgb,var(--c) 40%,var(--card)) center/cover;display:grid;place-items:center;color:var(--c);margin-bottom:6px;border-bottom:3px solid var(--c)}
+.rcard .rt .i{width:28px;height:28px}
+.rcard b{font-size:.9rem;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+.rcard small{color:var(--mut);font-size:.74rem;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(hover:hover){.rcard{transition:transform .25s var(--e),border-color .25s}.rcard:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--c) 55%,var(--gb))}}
+@media(max-width:599px){.rlist{margin:0 -14px;padding:2px 14px 8px}.rcard{width:154px}}
+@media(min-width:860px){.rlist{scrollbar-width:thin}}
+
+#media{flex:1;min-width:0;align-self:stretch;display:flex;overflow:auto;border-radius:10px}
+#media>img{margin:auto;flex:none;cursor:zoom-in}
+#media>iframe{flex:1;min-height:0}
+#media>p{margin:auto;color:var(--mut)}
+#media.zd{touch-action:pan-x pan-y}#media.zd>img{cursor:zoom-out}
+.stage>#media,.stage>.zm{animation:none}
+#media>*{animation:sl .45s var(--e)}
+.zm{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:2px;padding:4px;border-radius:99px;background:var(--glass2);border:1px solid var(--gb);box-shadow:inset 0 1px 0 var(--hl),0 10px 24px -10px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.zm button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--ink);transition:background .2s,transform .2s}
+.zm button .i{width:20px;height:20px}
+.zm button:hover:not(:disabled){background:color-mix(in srgb,var(--hi) 22%,transparent)}
+.zm button:active:not(:disabled){transform:scale(.9)}
+.zm button:disabled{opacity:.35;cursor:default}
+.zm .zv{width:auto;min-width:54px;padding:0 8px;border-radius:99px;font-size:.78rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+.strip{flex:none;display:flex;gap:8px;overflow-x:auto;position:relative;padding:4px 18px 8px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.th{position:relative;flex:none;width:64px;height:48px;border-radius:10px;overflow:hidden;border:2px solid var(--gb);background:var(--glass3);opacity:.7;display:grid;place-items:center;padding:0;transition:opacity .25s,border-color .25s,transform .25s var(--e),box-shadow .25s}
+.th:active{transform:scale(.93)}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th .tx{font-size:.68rem;font-weight:800;color:var(--hi)}
+.th i{position:absolute;left:3px;bottom:3px;font-style:normal;font-size:.62rem;font-weight:700;line-height:1;padding:2px 5px;border-radius:99px;background:rgba(5,5,5,.62);color:#fff}
+.th.on{opacity:1;border-color:var(--hi);box-shadow:0 0 0 2px color-mix(in srgb,var(--hi) 35%,transparent)}
+@media(max-width:599px){.strip{padding:2px 12px 6px}.th{width:56px;height:42px}}
+
+.cr{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:.8rem;font-weight:700;color:var(--ink)}
+.cr span{padding:3px 10px;border-radius:99px;background:var(--glass3);border:1px solid var(--gb)}
+.cr .s{background:var(--c);color:var(--ct);border-color:transparent}
+.cr i{font-style:normal;color:var(--mut)}
+.rdsc{margin-top:8px;font-size:.88rem;color:var(--mut)}
+.rvr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:10px}
+.rvr .btn{margin:0;padding:9px 16px;font-size:.88rem}
+.rvr small{color:var(--mut);font-size:.78rem}
+.rvr .btn.done{background:linear-gradient(135deg,#1fa971,#0b7a4f);color:#fff;border-color:rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 10px 22px -10px #1fa971}
+.ch{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.rvb{display:inline-flex;align-items:center;gap:3px;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:99px;background:color-mix(in srgb,#1fa971 22%,transparent);color:#16a06a;border:1px solid color-mix(in srgb,#1fa971 45%,transparent)}
+.rvb .i{width:12px;height:12px;stroke-width:2.4}
+:root:not([data-t=dark]) .rvb{color:#0b6b46}
+.stage:has(#mi),#media:has(#mi){touch-action:pan-x pan-y}
 </style>
 </head>
 <body>
@@ -359,7 +413,16 @@ dialog::backdrop{background:var(--bd);-webkit-backdrop-filter:blur(8px);backdrop
 <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></symbol>
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
 <symbol id="i-empty" viewBox="0 0 24 24"><circle cx="7" cy="16" r="2"/><circle cx="17" cy="8" r="2" stroke-dasharray="2 2.2"/><path d="M8.6 14.6l6.8-5.2" stroke-dasharray="2 2.2"/></symbol>
-<symbol id="i-fs" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol></defs></svg>
+<symbol id="i-fs" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></symbol>
+<symbol id="i-zin" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M11 8.5v5M8.5 11h5"/></symbol>
+<symbol id="i-zout" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5M8.5 11h5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 3h8l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><rect x="8" y="13" width="8" height="4.5" rx="1"/></symbol>
+<symbol id="i-img" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.7"/><path d="m4 17 5-4.5 3.5 3L15.5 13 20 17.5"/></symbol>
+<symbol id="i-docf" viewBox="0 0 24 24"><path d="M6 3h8l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5M8.5 12h7M8.5 15h7M8.5 18h4"/></symbol>
+<symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 5v14M7 19l-3-3M7 19l3-3M17 19V5M17 5l-3 3M17 5l3 3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+</defs></svg>
 <header><div class="bar">
  <div class="brand" id="logo"><svg width="30" height="30" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="9" fill="var(--acc)"/><path d="M8 19l6-9 6 9H8" fill="none" stroke="var(--accx)" stroke-width="1.6"/><g fill="var(--accx)"><circle cx="8" cy="19" r="2"/><circle cx="14" cy="10" r="2"/><circle cx="20" cy="19" r="2"/></g></svg><span>VISION_S <b>NEURA</b></span></div>
  <nav id="nav"><i class="ind"></i>
@@ -378,23 +441,26 @@ dialog::backdrop{background:var(--bd);-webkit-backdrop-filter:blur(8px);backdrop
   <div class="stats"><div><b id="stN">0</b><span>notes</span></div><div><b id="stF">0</b><span>files</span></div><div><b>4</b><span>subjects</span></div></div>
  </section>
  <div class="tiles" id="chips"></div>
- <div class="note-tools" aria-label="Note display options">
-  <select id="noteSort" aria-label="Sort notes"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="alphabetical">Alphabetical order</option></select>
-  <select id="fileFilter" aria-label="Filter by file type"><option value="all">All file types</option><option value="pdf">PDF files</option><option value="image">Images</option><option value="document">Documents</option></select>
-  <button class="btn g" id="clearNoteFilters" type="button" style="margin:0">Clear filters</button>
- </div>
- <section id="recentSection" hidden><div class="sh"><h2>Recently opened</h2><button class="btn g" id="clearRecent" type="button" style="margin:0">Clear history</button></div><div class="grid" id="recentGrid"></div></section>
+ <section class="rec" id="recent" hidden aria-label="Recently opened notes"><div class="rh"><h3><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Recently opened</h3><button type="button" id="recClr">Clear</button></div><div class="rlist" id="recList"></div></section>
  <div class="sh rv" id="notes"><h2 id="gt">Latest notes</h2><span id="gc"></span></div>
+ <div class="tools" id="tools">
+  <div class="seg" id="typeF" role="group" aria-label="Filter by file type">
+   <button type="button" class="chp on" data-ty="all" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-all"/></svg>All types<em>0</em></button>
+   <button type="button" class="chp" data-ty="pdf" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-pdf"/></svg>PDF files<em>0</em></button>
+   <button type="button" class="chp" data-ty="img" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-img"/></svg>Images<em>0</em></button>
+   <button type="button" class="chp" data-ty="doc" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-docf"/></svg>Documents<em>0</em></button>
+  </div>
+  <div class="sortw"><svg class="i" aria-hidden="true"><use href="#i-sort"/></svg><select id="sortSel" aria-label="Sort notes"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="az">Alphabetical (A–Z)</option></select></div>
+ </div>
  <div class="grid" id="grid"></div>
  <section class="cta rv"><div><h3>Missing a chapter?</h3><p>Tell us what you need and it gets added.</p></div><div><button class="btn" data-go="req">Request notes</button><button class="btn g" data-go="saved">Saved notes</button></div></section>
 </main>
 
 <dialog id="dView" class="wide"><div class="dh"><h3 id="vT">Note</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
- <div class="stage" id="stage"></div>
- <div class="reader-thumbs" id="readerThumbs" aria-label="Note files"></div>
- <div class="reader-extra"><div class="zoom-controls"><button class="ib" id="zoomOut" type="button" aria-label="Zoom out">−</button><span id="zoomLevel">100%</span><button class="ib" id="zoomIn" type="button" aria-label="Zoom in">+</button><button class="btn g" id="zoomReset" type="button" style="margin:0">Reset zoom</button></div><button class="btn g" id="revisionBtn" type="button" style="margin:0">Mark chapter as revised</button></div>
+ <div class="stage" id="stage"><div id="media"></div><div class="zm" id="zm" hidden role="group" aria-label="Image zoom"><button type="button" id="zOut" aria-label="Zoom out"><svg class="i" aria-hidden="true"><use href="#i-zout"/></svg></button><button type="button" class="zv" id="zv" aria-label="Reset zoom to 100%">100%</button><button type="button" id="zIn" aria-label="Zoom in"><svg class="i" aria-hidden="true"><use href="#i-zin"/></svg></button></div></div>
+ <div class="strip" id="strip" hidden role="group" aria-label="File thumbnails"></div>
  <div class="ctl"><button class="btn g" id="prev" style="margin:0"><svg class="i " aria-hidden="true"><use href="#i-l"/></svg><span class="lbl">Prev</span></button><span id="cnt"></span><button class="btn g" id="next" style="margin:0"><span class="lbl">Next</span><svg class="i " aria-hidden="true"><use href="#i-r"/></svg></button><button class="btn g" id="fsBtn" style="margin:0" aria-label="Toggle Fullscreen"><svg class="i" aria-hidden="true"><use href="#i-fs"/></svg><span class="lbl">Fullscreen</span></button><a class="btn" id="dl" style="margin:0" target="_blank" rel="noopener"><svg class="i " aria-hidden="true"><use href="#i-dl"/></svg>Download</a></div>
- <div class="db" id="vD" style="padding-top:0;color:var(--mut)"></div></dialog>
+ <div class="db" id="vD"></div></dialog>
 
 <dialog id="dPin"><div class="dh"><h3>Admin access</h3><button class="ib" data-close aria-label="Close"><svg class="i " aria-hidden="true"><use href="#i-x"/></svg></button></div>
  <form class="db" id="fPin"><label for="pin">Admin PIN</label><input id="pin" type="password" autocomplete="off" required><button class="btn">Unlock</button></form></dialog>
@@ -458,6 +524,20 @@ const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){retu
 const put=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let notes=LS('nn_cache',[]),saved=new Set(LS('nn_saved',[])),filter='all',q='',view='home',pin=sessionStorage.getItem('nn_pin')||'',files=[],editId=null,cur=null,idx=0;
+let sort=LS('nn_sort','new'),tf='all',recent=LS('nn_recent',[]),rev=LS('nn_rev',{}),zoom=1,noSwipe=false;
+if(!['new','old','az'].includes(sort))sort='new';
+if(!Array.isArray(recent))recent=[];
+if(!rev||typeof rev!=='object'||Array.isArray(rev))rev={};
+const ZMIN=.5,ZMAX=4;
+const tsOf=n=>{const m=/^n(\d{10,})$/.exec(String(n.id));return m?+m[1]:(Date.parse(n.date)||0)};
+const azc=(a,b)=>{const o={numeric:true,sensitivity:'base'};return String(a.topic||'').localeCompare(String(b.topic||''),undefined,o)||String(a.chapter||'').localeCompare(String(b.chapter||''),undefined,o)};
+const SORTS={new:(a,b)=>tsOf(b)-tsOf(a)||notes.indexOf(a)-notes.indexOf(b),old:(a,b)=>tsOf(a)-tsOf(b)||notes.indexOf(b)-notes.indexOf(a),az:azc};
+const ftype=f=>{const m=String(f.mime||'').toLowerCase(),n=String(f.name||'').toLowerCase();if(m.startsWith('image/')||/\.(png|jpe?g|gif|webp|bmp|svg|heic)$/.test(n))return'img';if(m==='application/pdf'||n.endsWith('.pdf'))return'pdf';return'doc'};
+const hasType=(n,t)=>t==='all'||(n.files||[]).some(f=>ftype(f)===t);
+const thumbS=(id,w)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+const fmt=t=>new Date(t).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const rk=n=>(n.subject||'')+'|'+String(n.chapter||'').trim().toLowerCase();
+const isRev=n=>!!rev[rk(n)];
 const api=()=>API;
 const thumb=id=>`https://drive.google.com/thumbnail?id=${id}&sz=w900`;
 const prevU=id=>`https://drive.google.com/file/d/${id}/preview`;
@@ -472,31 +552,53 @@ const SC={Physics:1,Chemistry:2,Zoology:3,Botany:4},sv=s=>SC[s]?`--c:var(--s${SC
 const ic=(n,c='')=>`<svg class="i ${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const doc=e=>`<svg class="doc" viewBox="0 0 64 80" aria-hidden="true"><path d="M8 4h32l16 16v52a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="var(--card)" stroke="var(--c)" stroke-width="2.5"/><path d="M40 4v16h16z" fill="var(--c)" opacity=".4"/><path d="M14 34h36M14 42h36M14 50h22" stroke="var(--c)" stroke-width="2.5" stroke-linecap="round" opacity=".55"/><rect x="12" y="57" width="30" height="13" rx="4" fill="var(--c)"/><text x="27" y="66.6" text-anchor="middle" font-size="8.5" font-weight="800" fill="var(--ct)" font-family="DM Sans,sans-serif">${e}</text></svg>`;
 let loading=false,still=false;
-const card=(n,k)=>{const F=n.files||[],f=F[0],img=f&&isImg(f),ext=f?(f.name.split('.').pop()||'').toUpperCase().slice(0,4):'';return `<article class="card" style="${sv(n.subject)};--i:${Math.min(k,9)}"><div class="thumb" data-o="${n.id}" ${img?`style="background-image:url('${thumb(f.id)}')"`:''}>${img?'':`${doc(ext||'FILE')}`}<span class="tag">${ic(IC[n.subject]||'all')}<em>${esc(n.subject)}</em></span><span class="pc">${F.length} file${F.length===1?'':'s'}${img||!ext?'':' · '+esc(ext)}</span></div><button class="bm${saved.has(n.id)?' on':''}" data-b="${n.id}" aria-label="${saved.has(n.id)?'Remove bookmark':'Bookmark'}">${ic('bm')}</button><div class="cb" data-o="${n.id}"><h3>${esc(n.topic)}</h3><div class="ch">${esc(n.chapter)}</div>${n.description?`<p>${esc(n.description)}</p>`:''}<div class="meta"><span>${esc(n.date)}</span><span class="op">Open${ic('r')}</span></div></div></article>`};
-const RECENT_KEY='nn_recent_notes',REVISED_KEY='nn_revised_chapters';
-function fileType(f){const mime=String(f?.mime||'').toLowerCase(),name=String(f?.name||'').toLowerCase();if(mime==='application/pdf'||name.endsWith('.pdf'))return 'pdf';if(mime.startsWith('image/')||/\.(png|jpe?g|gif|webp|bmp|svg|avif)$/i.test(name))return 'image';if(mime.includes('word')||mime.includes('document')||mime.includes('presentation')||mime.includes('spreadsheet')||/\.(docx?|pptx?|xlsx?|odt|ods|odp|txt|rtf|csv)$/i.test(name))return 'document';return 'other'}
-function noteMatchesType(note,type){return type==='all'||(note.files||[]).some(f=>fileType(f)===type)}
-function noteTimestamp(note){const parsed=Date.parse(note.date||'');if(!Number.isNaN(parsed))return parsed;const n=Number(String(note.id||'').replace(/\D/g,''));return Number.isFinite(n)?n:0}
-function getRecent(){const a=LS(RECENT_KEY,[]);return Array.isArray(a)?a:[]}
-function renderRecent(){const section=$('#recentSection'),grid=$('#recentGrid');if(!section||!grid)return;const recentNotes=getRecent().map(id=>notes.find(n=>String(n.id)===String(id))).filter(Boolean).slice(0,6);section.hidden=view!=='home'||!!q||recentNotes.length===0;grid.innerHTML=recentNotes.map((n,i)=>card(n,i)).join('')}
+const card=(n,k)=>{const F=n.files||[],f=F[0],img=f&&isImg(f),ext=f?(f.name.split('.').pop()||'').toUpperCase().slice(0,4):'';return `<article class="card" style="${sv(n.subject)};--i:${Math.min(k,9)}"><div class="thumb" data-o="${n.id}" ${img?`style="background-image:url('${thumb(f.id)}')"`:''}>${img?'':`${doc(ext||'FILE')}`}<span class="tag">${ic(IC[n.subject]||'all')}<em>${esc(n.subject)}</em></span><span class="pc">${F.length} file${F.length===1?'':'s'}${img||!ext?'':' · '+esc(ext)}</span></div><button class="bm${saved.has(n.id)?' on':''}" data-b="${n.id}" aria-label="${saved.has(n.id)?'Remove bookmark':'Bookmark'}">${ic('bm')}</button><div class="cb" data-o="${n.id}"><h3>${esc(n.topic)}</h3><div class="ch">${esc(n.chapter)}${isRev(n)?`<span class="rvb">${ic('check')}Revised</span>`:''}</div>${n.description?`<p>${esc(n.description)}</p>`:''}<div class="meta"><span>${esc(n.date)}</span><span class="op">Open${ic('r')}</span></div></div></article>`};
 function render(){
- cnt($('#stN'),notes.length);cnt($('#stF'),notes.reduce((a,n)=>a+(n.files||[]).length,0));$('#hero').hidden=view!=='home'||!!q;chips();
- const sortMode=$('#noteSort')?.value||'newest',typeMode=$('#fileFilter')?.value||'all';
- const L=notes.filter(n=>(view!=='saved'||saved.has(n.id))&&(filter==='all'||n.subject===filter)&&[n.topic,n.chapter,n.subject,n.description].join(' ').toLowerCase().includes(q)&&noteMatchesType(n,typeMode));
- L.sort((a,b)=>sortMode==='alphabetical'?String(a.topic||'').localeCompare(String(b.topic||''),undefined,{sensitivity:'base'}):sortMode==='oldest'?noteTimestamp(a)-noteTimestamp(b):noteTimestamp(b)-noteTimestamp(a));
- $('#grid').classList.toggle('still',still);$('#gt').textContent=view==='saved'?'Saved notes':q?'Search results':'Latest notes';$('#gc').textContent=loading?'Loading…':L.length+' shown';
- $('#grid').innerHTML=loading?'<div class="sk"></div>'.repeat(3):L.length?L.map(card).join(''):`<div class="empty">${ic(view==='saved'?'bm':'empty','big')}${!api()?'Notes will appear here once the Google link is connected.':view==='saved'?'No saved notes match these filters.':'No notes found. Try clearing the filters.'}</div>`;renderRecent();
-}
-function revisionKey(note){return `${note.subject||''}::${note.chapter||note.topic||note.id}`}
-function isRevised(note){return !!LS(REVISED_KEY,{})[revisionKey(note)]}
-function updateRevisionButton(){if(!cur)return;const revised=isRevised(cur),b=$('#revisionBtn');b.classList.toggle('revised',revised);b.textContent=revised?'✓ Chapter revised':'Mark chapter as revised';b.setAttribute('aria-pressed',String(revised))}
-function toggleRevision(){if(!cur)return;const all=LS(REVISED_KEY,{}),key=revisionKey(cur);if(all[key])delete all[key];else all[key]=true;put(REVISED_KEY,all);updateRevisionButton();toast(all[key]?'Chapter marked as revised':'Revision mark removed')}
-function renderReaderThumbnails(){const holder=$('#readerThumbs'),list=cur?.files||[];holder.innerHTML=list.map((f,i)=>`<button type="button" class="reader-thumb${i===idx?' active':''}" data-reader-index="${i}" aria-label="Open file ${i+1}" aria-current="${i===idx?'true':'false'}">${isImg(f)?`<img src="${thumb(f.id)}" alt="${esc(f.name)}" loading="lazy">`:`<span>${esc((f.name||'FILE').split('.').pop().toUpperCase())}</span>`}</button>`).join('')}
-let zoom=1;
-function open(id){cur=notes.find(n=>String(n.id)===String(id));if(!cur)return;idx=0;zoom=1;const recent=getRecent().filter(old=>String(old)!==String(cur.id));recent.unshift(cur.id);put(RECENT_KEY,recent.slice(0,20));$('#vT').textContent=cur.topic||'Note';$('#vD').textContent=`${cur.subject||''} · ${cur.chapter||''}${cur.description?' — '+cur.description:''}`;slide();updateRevisionButton();$('#dView').showModal();renderRecent()}
-function slide(d=0){$('#stage').style.setProperty('--dx',d*48+'px');const F=cur?.files||[],f=F[idx];zoom=1;$('#stage').innerHTML=!f?'<p>No file</p>':isImg(f)?`<img id="readerImage" src="${thumb(f.id).replace('w900','w1600')}" alt="${esc(cur.topic||f.name)}" style="transform:scale(1);transition:transform .2s ease">`:`<iframe src="${prevU(f.id)}" title="${esc(f.name)}"></iframe>`;$('#cnt').textContent=F.length?`${idx+1} / ${F.length}`:'';$('#dl').href=f?dlU(f.id):'#';$('#prev').disabled=idx<1;$('#next').disabled=idx>=F.length-1;$('#zoomLevel').textContent='100%';$('#zoomIn').disabled=!f||!isImg(f);$('#zoomOut').disabled=!f||!isImg(f);$('#zoomReset').disabled=!f||!isImg(f);renderReaderThumbnails()}
-function changeZoom(amount){const img=$('#readerImage');if(!img)return;zoom=Math.max(.5,Math.min(3,zoom+amount));img.style.transform=`scale(${zoom})`;$('#zoomLevel').textContent=`${Math.round(zoom*100)}%`}
-function resetZoom(){zoom=1;const img=$('#readerImage');if(img)img.style.transform='scale(1)';$('#zoomLevel').textContent='100%'}
+ cnt($('#stN'),notes.length);cnt($('#stF'),notes.reduce((a,n)=>a+(n.files||[]).length,0));
+ $('#hero').hidden=view!=='home'||!!q;
+ chips();
+ const base=notes.filter(n=>(view!=='saved'||saved.has(n.id))&&(filter==='all'||n.subject===filter)&&[n.topic,n.chapter,n.subject,n.description].join(' ').toLowerCase().includes(q));
+ const L=base.filter(n=>hasType(n,tf)).sort(SORTS[sort]||SORTS.new);
+ $$('#typeF [data-ty]').forEach(b=>{const t=b.dataset.ty;b.classList.toggle('on',t===tf);b.setAttribute('aria-pressed',t===tf);b.querySelector('em').textContent=base.filter(n=>hasType(n,t)).length});
+ $('#sortSel').value=sort;
+ $('#grid').classList.toggle('still',still);$('#gt').textContent=view==='saved'?'Saved notes':q?'Search results':sort==='new'?'Latest notes':'All notes';$('#gc').textContent=loading?'Loading…':L.length+' shown';
+ const msg=!api()?'Notes will appear here once the Google link is connected.':tf!=='all'?'No notes with this file type here. Try another filter.':view==='saved'?'No saved notes yet. Tap the bookmark on any note.':'No notes found.';
+ $('#grid').innerHTML=loading?'<div class="sk"></div>'.repeat(3):L.length?L.map(card).join(''):`<div class="empty">${ic(view==='saved'&&tf==='all'?'bm':'empty','big')}${msg}</div>`;
+ renderRecent()}
+
+// recently opened (localStorage)
+function addRecent(id){recent=[id,...recent.filter(x=>x!==id)].slice(0,8);put('nn_recent',recent);renderRecent()}
+function renderRecent(){const w=$('#recent'),L=recent.map(id=>notes.find(n=>n.id===id)).filter(Boolean),show=view==='home'&&!q&&L.length>0;w.hidden=!show;if(!show)return;
+ $('#recList').innerHTML=L.map(n=>{const im=(n.files||[]).find(isImg);return `<button type="button" class="rcard" data-o="${n.id}" style="${sv(n.subject)}"><span class="rt"${im?` style="background-image:url('${thumbS(im.id,400)}')"`:''}>${im?'':ic(IC[n.subject]||'all')}</span><b>${esc(n.topic)}</b><small>${esc(n.subject)} · ${esc(n.chapter)}</small></button>`}).join('')}
+
+// chapter reference + revision
+function fillRef(){const n=cur,k=rk(n),done=!!rev[k],same=notes.filter(x=>rk(x)===k).length,cr=[['s',n.subject],['',n.chapter],['t',n.topic]].filter(c=>c[1]);
+ $('#vD').style.cssText=sv(n.subject);
+ $('#vD').innerHTML=`<div class="cr" aria-label="Chapter reference">${cr.map(c=>`<span class="${c[0]}">${esc(c[1])}</span>`).join('<i aria-hidden="true">›</i>')}</div>${n.description?`<p class="rdsc">${esc(n.description)}</p>`:''}${n.chapter?`<div class="rvr"><button type="button" class="btn g${done?' done':''}" id="revBtn" aria-pressed="${done}">${ic('check')}${done?'Chapter revised':'Mark chapter as revised'}</button><small>${done?'Revised on '+fmt(rev[k])+' · tap to undo':same>1?'Applies to all '+same+' notes in this chapter':''}</small></div>`:''}`}
+function toggleRev(){if(!cur)return;const k=rk(cur);if(rev[k])delete rev[k];else rev[k]=Date.now();put('nn_rev',rev);fillRef();const bt=$('#revBtn');bt&&bt.focus();still=true;render();still=false;toast(rev[k]?'Chapter marked as revised':'Revision mark removed')}
+
+// reader
+function open(id){cur=notes.find(n=>n.id===id);if(!cur)return;idx=0;$('#vT').textContent=cur.topic;fillRef();strip();slide();addRecent(id);$('#dView').showModal()}
+function strip(){const F=cur.files||[],el=$('#strip');el.hidden=F.length<2;el.scrollLeft=0;
+ el.innerHTML=F.length<2?'':F.map((f,i)=>`<button type="button" class="th" data-t="${i}" aria-label="File ${i+1} of ${F.length}: ${esc(f.name)}">${isImg(f)?`<img loading="lazy" alt="" src="${thumbS(f.id,200)}">`:`<span class="tx">${esc((String(f.name).split('.').pop()||'FILE').toUpperCase().slice(0,4))}</span>`}<i>${i+1}</i></button>`).join('')}
+function slide(d=0){zoom=1;$('#stage').style.setProperty('--dx',d*48+'px');const F=cur.files||[],f=F[idx];
+ $('#media').innerHTML=!f?'<p>No file</p>':isImg(f)?`<img id="mi" src="${thumb(f.id).replace('w900','w1600')}" alt="${esc(cur.topic)}">`:`<iframe src="${prevU(f.id)}" title="${esc(f.name)}"></iframe>`;
+ $('#zm').hidden=!(f&&isImg(f));applyZoom();
+ const ths=$$('#strip .th'),sb=$('#strip');ths.forEach((b,i)=>{const on=i===idx;b.classList.toggle('on',on);on?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current')});
+ if(ths[idx]&&!sb.hidden)sb.scrollTo({left:ths[idx].offsetLeft-(sb.clientWidth-ths[idx].offsetWidth)/2,behavior:'smooth'});
+ $('#cnt').textContent=F.length?`${idx+1} / ${F.length}`:'';$('#dl').href=f?dlU(f.id):'#';$('#prev').disabled=idx<1;$('#next').disabled=idx>=F.length-1}
+
+// image zoom
+function applyZoom(keep){
+ $('#zv').textContent=Math.round(zoom*100)+'%';$('#zOut').disabled=zoom<=ZMIN;$('#zIn').disabled=zoom>=ZMAX;
+ const m=$('#media'),im=$('#mi');m.classList.toggle('zd',zoom>1);if(!im)return;
+ const cx=(m.scrollLeft+m.clientWidth/2)/(m.scrollWidth||1),cy=(m.scrollTop+m.clientHeight/2)/(m.scrollHeight||1),s=im.style;
+ s.width=s.height=s.maxWidth=s.maxHeight='';
+ if(zoom!==1){if(!im.naturalWidth)return;const r=im.getBoundingClientRect();s.maxWidth=s.maxHeight='none';s.width=r.width*zoom+'px';s.height='auto'}
+ if(keep){m.scrollLeft=cx*m.scrollWidth-m.clientWidth/2;m.scrollTop=cy*m.scrollHeight-m.clientHeight/2}}
+function setZoom(z){z=Math.min(ZMAX,Math.max(ZMIN,Math.round(z*100)/100));if(z===zoom)return;zoom=z;applyZoom(true)}
+function zUp(){setZoom(zoom+(zoom<2?.25:.5))}
+function zDn(){setZoom(zoom-(zoom<=2?.25:.5))}
 
 function shrink(file){return new Promise(res=>{if(!file.type.startsWith('image/')||file.type==='image/gif')return res(file);const i=new Image();i.onload=()=>{const s=Math.min(1,1600/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);c.toBlob(b=>res(b||file),'image/jpeg',.82)};i.onerror=()=>res(file);i.src=URL.createObjectURL(file)})}
 const b64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(',')[1]);f.readAsDataURL(b)});
@@ -531,12 +633,6 @@ function setView(v){if(v==='req')return $('#dReq').showModal();view=v;$$('#nav b
 $('#q').oninput=e=>{q=e.target.value.trim().toLowerCase();still=true;render();still=false};
 $('#chips').onclick=e=>{const b=e.target.closest('[data-s]');if(b){filter=b.dataset.s;render()}};
 $('#grid').onclick=e=>{const b=e.target.closest('[data-b]');if(b){const id=b.dataset.b;saved.has(id)?saved.delete(id):saved.add(id);put('nn_saved',[...saved]);const on=saved.has(id);b.classList.toggle('on',on);b.setAttribute('aria-label',on?'Remove bookmark':'Bookmark');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');if(view==='saved'&&!on){b.closest('.card').classList.add('out');setTimeout(()=>{still=true;render();still=false},280)}return}const o=e.target.closest('[data-o]');if(o)open(o.dataset.o)};
-$('#noteSort').onchange=render;$('#fileFilter').onchange=render;
-$('#clearNoteFilters').onclick=()=>{$('#noteSort').value='newest';$('#fileFilter').value='all';filter='all';q='';$('#q').value='';render();toast('Filters cleared')};
-$('#clearRecent').onclick=()=>{put(RECENT_KEY,[]);renderRecent();toast('Recently opened history cleared')};
-$('#recentGrid').onclick=e=>{const b=e.target.closest('[data-b]');if(b){const id=b.dataset.b;saved.has(id)?saved.delete(id):saved.add(id);put('nn_saved',[...saved]);render();return}const o=e.target.closest('[data-o]');if(o)open(o.dataset.o)};
-$('#readerThumbs').onclick=e=>{const b=e.target.closest('[data-reader-index]');if(!b)return;idx=Number(b.dataset.readerIndex);slide()};
-$('#zoomIn').onclick=()=>changeZoom(.25);$('#zoomOut').onclick=()=>changeZoom(-.25);$('#zoomReset').onclick=resetZoom;$('#revisionBtn').onclick=toggleRevision;
 $('#nav').onclick=e=>{const b=e.target.closest('button');if(b)setView(b.dataset.v)}; $$('[data-go]').forEach(b=>b.onclick=()=>setView(b.dataset.go));
 $('#prev').onclick=()=>{idx--;slide(-1)};$('#next').onclick=()=>{idx++;slide(1)};
 $('#fsBtn').onclick=()=>{const st=$('#stage');if(!document.fullscreenElement){if(st.requestFullscreen)st.requestFullscreen();else if(st.webkitRequestFullscreen)st.webkitRequestFullscreen()}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen()}}; $$('[data-close]').forEach(b=>b.onclick=()=>shut(b.closest('dialog')));$$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d)shut(d)}));$$('dialog').forEach(d=>d.addEventListener('cancel',e=>{e.preventDefault();shut(d)}));$('#fPin').onsubmit=unlock;$('#fUp').onsubmit=save;$('#fReq').onsubmit=sendReq;
@@ -554,8 +650,32 @@ addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLo
 
 let tx=0;const st=$('#stage');st.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
 const go=d=>{const n=(cur&&cur.files||[]).length;if(idx+d>=0&&idx+d<n){idx+=d;slide(d)}};
-st.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(d<0?1:-1)});
-addEventListener('keydown',e=>{if($('#dView').open&&(e.key==='ArrowRight'||e.key==='ArrowLeft'))go(e.key==='ArrowRight'?1:-1)});
+st.addEventListener('touchend',e=>{if(zoom>1||noSwipe)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(d<0?1:-1)});
+addEventListener('keydown',e=>{if(!$('#dView').open)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft')go(e.key==='ArrowRight'?1:-1);else if($('#mi')&&!e.ctrlKey&&!e.metaKey){if(e.key==='+'||e.key==='=')zUp();else if(e.key==='-'||e.key==='_')zDn();else if(e.key==='0')setZoom(1)}});
+// v5 events: sort, file-type filter, recent, thumbnails, zoom, revision
+$('#sortSel').onchange=e=>{sort=e.target.value;put('nn_sort',sort);render()};
+$('#typeF').onclick=e=>{const b=e.target.closest('[data-ty]');if(b){tf=b.dataset.ty;render()}};
+$('#recList').onclick=e=>{const b=e.target.closest('[data-o]');if(b)open(b.dataset.o)};
+$('#recClr').onclick=()=>{recent=[];put('nn_recent',recent);renderRecent();toast('Recently opened cleared')};
+$('#strip').onclick=e=>{const b=e.target.closest('[data-t]');if(!b)return;const n=+b.dataset.t;if(n===idx)return;const d=n>idx?1:-1;idx=n;slide(d)};
+$('#zIn').onclick=zUp;$('#zOut').onclick=zDn;$('#zv').onclick=()=>setZoom(1);
+$('#vD').onclick=e=>{if(e.target.closest('#revBtn'))toggleRev()};
+$('#media').addEventListener('wheel',e=>{if(!e.ctrlKey||!$('#mi'))return;e.preventDefault();setZoom(zoom*(e.deltaY<0?1.15:1/1.15))},{passive:false});
+$('#media').addEventListener('dblclick',e=>{if(e.target.id==='mi')setZoom(zoom===1?2:1)});
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if($('#mi')){zoom=1;applyZoom()}}));
+// pinch-to-zoom (touch): two fingers zoom around their midpoint, one finger pans when zoomed
+const pz={on:0,d:1,z:1,fw:0},tdist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY)||1;
+function pinchTo(z,mx,my){const m=$('#media'),im=$('#mi');if(!im)return;
+ const fx=(m.scrollLeft+mx)/(m.scrollWidth||1),fy=(m.scrollTop+my)/(m.scrollHeight||1),s=im.style;
+ zoom=Math.min(ZMAX,Math.max(ZMIN,z));
+ if(Math.abs(zoom-1)<.001){s.width=s.height=s.maxWidth=s.maxHeight=''}else{s.maxWidth=s.maxHeight='none';s.width=pz.fw*zoom+'px';s.height='auto'}
+ $('#zv').textContent=Math.round(zoom*100)+'%';$('#zOut').disabled=zoom<=ZMIN;$('#zIn').disabled=zoom>=ZMAX;m.classList.toggle('zd',zoom>1);
+ m.scrollLeft=fx*m.scrollWidth-mx;m.scrollTop=fy*m.scrollHeight-my}
+{const md=$('#media');
+ md.addEventListener('touchstart',e=>{const im=$('#mi');if(e.touches.length===2&&im&&im.naturalWidth){noSwipe=true;pz.on=1;pz.d=tdist(e.touches);pz.z=zoom;pz.fw=im.getBoundingClientRect().width/zoom}},{passive:true});
+ md.addEventListener('touchmove',e=>{if(!pz.on||e.touches.length!==2)return;e.preventDefault();const r=md.getBoundingClientRect(),t=e.touches;pinchTo(pz.z*tdist(t)/pz.d,(t[0].clientX+t[1].clientX)/2-r.left,(t[0].clientY+t[1].clientY)/2-r.top)},{passive:false});
+ const end=e=>{if(pz.on&&e.touches.length<2){pz.on=0;if(zoom<1)setZoom(1)}if(!e.touches.length)setTimeout(()=>noSwipe=false,0)};
+ md.addEventListener('touchend',end);md.addEventListener('touchcancel',end)}
 // motion helpers
 const calm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
 function shut(d){if(!d.open||d.classList.contains('out'))return;if(calm())return d.close();d.classList.add('out');setTimeout(()=>{d.classList.remove('out');d.close();d.style.transform=''},230)}
